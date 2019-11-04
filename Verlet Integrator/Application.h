@@ -9,6 +9,7 @@
 #include "ModuleTextures.h"
 #include "ModuleInput.h"
 #include "ModuleAudio.h"
+#include"ModuleVerlet.h"
 
 class Application
 {
@@ -18,6 +19,7 @@ public:
 	ModuleTextures* textures;
 	ModuleInput* input;
 	ModuleAudio* audio;
+	ModuleVerlet* verlet;
 
 private:
 

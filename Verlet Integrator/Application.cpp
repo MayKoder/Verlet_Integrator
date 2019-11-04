@@ -7,6 +7,7 @@ Application::Application()
 	textures = new ModuleTextures(this);
 	input = new ModuleInput(this);
 	audio = new ModuleAudio(this, true);
+	verlet = new ModuleVerlet(this, true);
 
 	// The order of calls is very important!
 	// Modules will Init() Start() and Update in this order
@@ -18,6 +19,7 @@ Application::Application()
 	AddModule(textures);
 	AddModule(input);
 	AddModule(audio);
+	AddModule(verlet);
 
 }
 
