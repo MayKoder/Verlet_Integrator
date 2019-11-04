@@ -5,13 +5,13 @@
 #include"IntegratorFunctions.h"
 
 struct Circle;
-class VerletIntegrator {
+class VerletIntegrator 
+{
 public:
 	VerletIntegrator();
 
-	void InitPoint(Circle p);
-	void updatePoints(Circle p);
-
+	void InitPoint(Circle* p);
+	void updatePoints(Circle* p);
 
 
 public:
@@ -20,6 +20,10 @@ public:
 	float bounce = 0.9f;
 	float gravity = 0.6f;
 	float friction = 0.3f;
+
+	int floor_Limit_Y = SCREEN_HEIGHT - 10;
+	int floor_Limit_X = SCREEN_WIDTH-10;
+
 };
 
 #endif // !_INTEGRATORFUNCTIONS_H_

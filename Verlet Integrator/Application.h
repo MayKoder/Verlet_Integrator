@@ -11,6 +11,7 @@
 #include "ModuleAudio.h"
 #include"ModuleVerlet.h"
 
+class ModuleVerlet;
 class Application
 {
 public:

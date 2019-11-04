@@ -13,12 +13,12 @@ struct Circle {
 	float old_y;
 	float vx;
 	float vy;
-	int radius;
+	int radius = 10;
 
 };
 
 
-
+class VerletIntegrator;
 class ModuleVerlet : public Module
 {
 public:
@@ -34,6 +34,7 @@ public:
 
 
 	Circle p;
+	VerletIntegrator* integrator;
 
 };
 

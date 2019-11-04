@@ -17,6 +17,18 @@ enum update_status
 	UPDATE_ERROR
 };
 
+struct vector2 {
+
+
+	float x, y;
+
+	void Zero() {
+		x = y = 0;
+	}
+
+
+};
+
 
 // Configuration -----------
 #define SCREEN_WIDTH 960
