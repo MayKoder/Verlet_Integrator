@@ -5,6 +5,20 @@
 #include "Application.h"
 #include"Module.h"
 
+struct Circle {
+
+	float x;
+	float y;
+	float old_x;
+	float old_y;
+	float vx;
+	float vy;
+	int radius;
+
+};
+
+
+
 class ModuleVerlet : public Module
 {
 public:
@@ -17,6 +31,9 @@ public:
 	update_status Update();
 	update_status PostUpdate();
 	bool CleanUp();
+
+
+	Circle p;
 
 };
 

@@ -17,6 +17,7 @@ enum update_status
 	UPDATE_ERROR
 };
 
+
 // Configuration -----------
 #define SCREEN_WIDTH 960
 #define SCREEN_HEIGHT 540

@@ -1,9 +1,10 @@
 #include "IntegratorFunctions.h"
+#include"ModuleVerlet.h"
 
 VerletIntegrator::VerletIntegrator()
 {}
 
-void VerletIntegrator::updatePoints()
+void VerletIntegrator::updatePoints(Circle p)
 {
 	//FOR MORE THAN ONE POINT - NOT COMPLETE
 	/*for (int i = 0; i < point.count(); i++)
@@ -20,47 +21,46 @@ void VerletIntegrator::updatePoints()
 		point.add(p);
 
 	}*/
-	while (1)
+
+	p.vx = (p.x - p.old_x) /** friction*/;
+	p.vy = (p.y - p.old_y) /** friction*/;
+
+	p.old_x = p.x;
+	p.old_y = p.y;
+	p.x += p.vx;
+	p.y += p.vy;
+	p.y += gravity;
+	LOG("POINT X: %.2f", p.x);
+	LOG("POINT Y: %.2f", p.y);
+
+	//RIGHT LIMIT
+	if (p.x > 100) //SHOULD BE CHANGED, INCLUDING SDL AND SO SCREEN WIDTH INSTEAD OF 200
 	{
-		p.vx = (p.x - p.old_x) /** friction*/;
-		p.vy = (p.y - p.old_y) /** friction*/;
-
-		p.old_x = p.x;
-		p.old_y = p.y;
-		p.x += p.vx;
-		p.y += p.vy;
-		p.y += gravity;
-		LOG("POINT X: %.2f", p.x);
-		LOG("POINT Y: %.2f", p.y);
-
-		//RIGHT LIMIT
-		if (p.x > 100) //SHOULD BE CHANGED, INCLUDING SDL AND SO SCREEN WIDTH INSTEAD OF 200
-		{
-			p.x = 100;
-			p.old_x = p.x + p.vx * bounce; //p.old_y should remain the same	
-		}
-		//LEFT LIMIT
-		else if (p.x < 0)
-		{
-			p.x = 0;
-			p.old_x = p.x + p.vx * bounce;
-		}
-		//TOP LIMIT
-		if (p.y > 100) //SHOULD BE CHANGED, INCLUDING SDL AND SO SCREEN HEIGHT INSTEAD OF 200
-		{
-			p.y = 100;
-			p.old_y = p.y + p.vy * bounce; //p.old_x should remain the same	
-		}
-		//BOTTOM LIMIT
-		else if (p.y < 0)
-		{
-			p.y = 0;
-			p.old_y = p.y + p.vy * bounce;
-		}
+		p.x = 100;
+		p.old_x = p.x + p.vx * bounce; //p.old_y should remain the same	
 	}
+	//LEFT LIMIT
+	else if (p.x < 0)
+	{
+		p.x = 0;
+		p.old_x = p.x + p.vx * bounce;
+	}
+	//TOP LIMIT
+	if (p.y > 100) //SHOULD BE CHANGED, INCLUDING SDL AND SO SCREEN HEIGHT INSTEAD OF 200
+	{
+		p.y = 100;
+		p.old_y = p.y + p.vy * bounce; //p.old_x should remain the same	
+	}
+	//BOTTOM LIMIT
+	else if (p.y < 0)
+	{
+		p.y = 0;
+		p.old_y = p.y + p.vy * bounce;
+	}
+	
 }
 
-void VerletIntegrator::InitPoint()
+void VerletIntegrator::InitPoint(Circle p)
 {
 	p.x = 50.f;
 	p.y = 50.f;
