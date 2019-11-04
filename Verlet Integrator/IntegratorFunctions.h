@@ -10,7 +10,7 @@ class VerletIntegrator
 public:
 	VerletIntegrator();
 
-	void InitPoint(Circle* p);
+	void InitPoint(Circle* p, vector2 pos);
 	void updatePoints(Circle* p);
 
 

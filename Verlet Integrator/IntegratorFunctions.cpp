@@ -4,6 +4,17 @@
 VerletIntegrator::VerletIntegrator()
 {}
 
+void VerletIntegrator::InitPoint(Circle* p, vector2 pos)
+{
+	p->x = pos.x;
+	p->y = pos.y;
+	p->old_x = 45.f;
+	p->old_y = 45.f;
+	p->vx = 0.f;
+	p->vy = 0.f;
+	//point.add(p);
+}
+
 void VerletIntegrator::updatePoints(Circle* p)
 {
 	//FOR MORE THAN ONE POINT - NOT COMPLETE
@@ -42,33 +53,23 @@ void VerletIntegrator::updatePoints(Circle* p)
 	//LEFT LIMIT
 	else if (p->x < 0 + p->radius)
 	{
-		p->x = 0 + p->radius;
+		p->x = 0 + (float)p->radius;
 		p->old_x = p->x + p->vx * bounce;
 	}
 	//TOP LIMIT
 	if (p->y > floor_Limit_Y) //SHOULD BE CHANGED, INCLUDING SDL AND SO SCREEN HEIGHT INSTEAD OF 200
 	{
-		p->y = floor_Limit_Y;
+		p->y = (float)floor_Limit_Y;
 		p->old_y = p->y + p->vy * bounce; //p.old_x should remain the same	
 	}
 	//BOTTOM LIMIT
 	else if (p->y < 0 + p->radius)
 	{
-		p->y = 0 + p->radius;
+		p->y = 0 + (float)p->radius;
 		p->old_y = p->y + p->vy * bounce;
 	}
 	
 }
 
-void VerletIntegrator::InitPoint(Circle* p)
-{
-	p->x = 50.f;
-	p->y = 50.f;
-	p->old_x = 45.f;
-	p->old_y = 45.f;
-	p->vx = 0.f;
-	p->vy = 0.f;
-	//point.add(p);
-}
 
 

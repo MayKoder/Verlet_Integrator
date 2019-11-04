@@ -33,7 +33,7 @@ public:
 	bool CleanUp();
 
 
-	Circle p;
+	p2List<Circle*> shapes;
 	VerletIntegrator* integrator;
 
 };
