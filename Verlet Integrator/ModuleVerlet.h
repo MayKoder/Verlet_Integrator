@@ -15,6 +15,8 @@ struct Circle {
 	float vy;
 	int radius = 10;
 
+	SDL_Rect selector_rect;
+
 };
 
 
@@ -35,6 +37,26 @@ public:
 
 	p2List<Circle*> shapes;
 	VerletIntegrator* integrator;
+
+	Circle* selected_shape;
+
+	bool CanBeSelected(const SDL_Rect& rect, const SDL_Rect& r)
+	{
+		bool detectedX = true;
+		bool detectedY = true;
+
+		if ((rect.x + rect.w) < r.x || (r.x + r.w) < rect.x)
+		{
+			detectedX = false;
+		}
+
+		if (rect.y < r.y || (rect.y + rect.h) > r.y + r.h)
+		{
+			detectedY = false;
+		}
+
+		return detectedX && detectedY;
+	}
 
 };
 

@@ -8,10 +8,13 @@ void VerletIntegrator::InitPoint(Circle* p, vector2 pos)
 {
 	p->x = pos.x;
 	p->y = pos.y;
-	p->old_x = 45.f;
-	p->old_y = 45.f;
+	p->old_x = pos.x;
+	p->old_y = pos.y;
 	p->vx = 0.f;
 	p->vy = 0.f;
+
+	p->selector_rect = { (int)pos.x, (int)pos.y, p->radius * 2, p->radius * 2};
+
 	//point.add(p);
 }
 
