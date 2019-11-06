@@ -17,12 +17,6 @@ struct Point {
 	SDL_Rect selector_rect;
 };
 
-struct Edge 
-{
-	Point* vertexA;
-	Point* vertexB;
-};
-
 
 enum ShapeType
 {
@@ -57,14 +51,16 @@ public:
 	Line(ShapeType s_type, Point* pointA, Point* pointB)
 	{
 		type = s_type;
-		p.vertexA = pointA;
-		p.vertexB = pointB;
+		vertexA = pointA;
+		vertexB = pointB;
 	}
 	~Line(){}
 
 public:
 
-	Edge p;
+	//Edge
+	Point* vertexA;
+	Point* vertexB;
 
 };
 

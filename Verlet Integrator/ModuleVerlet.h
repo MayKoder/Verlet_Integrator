@@ -7,7 +7,6 @@
 #include"Shape.h"
 #include"p2List_Extended.h"
 
-
 class VerletIntegrator;
 class ModuleVerlet : public Module
 {
@@ -27,7 +26,7 @@ public:
 	p2List_Extended<Point*> world_points;
 	VerletIntegrator* integrator;
 
-	Point* selected_shape;
+	Point* selected_point;
 
 	bool CanBeSelected(const SDL_Rect& rect, const SDL_Rect& r)
 	{
@@ -47,17 +46,7 @@ public:
 		return detectedX && detectedY;
 	}
 
-	Point* MouseHoverSelection() 
-	{
-		for (unsigned int i = 0; i < world_points.count(); i++)
-		{
-			Point* tmp_shape = world_points[i];
-			if (CanBeSelected({ App->input->GetMouseX(), App->input->GetMouseY(), 0, 0 }, tmp_shape->selector_rect))
-			{
-				return world_points[i];
-			}
-		}
-	}
+	Point* MouseHoverSelection();
 
 };
 

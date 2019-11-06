@@ -23,8 +23,8 @@ bool ModuleVerlet::Init()
 // PreUpdate: clear buffer
 update_status ModuleVerlet::PreUpdate()
 {
-	if(selected_shape)
-		App->renderer->DrawLine(App->input->GetMouseX(), App->input->GetMouseY(), (int)selected_shape->x, (int)selected_shape->y, 255, 0, 0);
+	if(selected_point)
+		App->renderer->DrawLine(App->input->GetMouseX(), App->input->GetMouseY(), (int)selected_point->x, (int)selected_point->y, 255, 0, 0);
 
 	////TODO: add lists with [] operator
 	for (int i = 0; i < (int)world_points.count(); i++)
@@ -42,13 +42,16 @@ update_status ModuleVerlet::Update()
 	if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN) 
 	{
 		integrator->InitPoint(world_points.add(new Point())->data, {(float)App->input->GetMouseX(), (float)App->input->GetMouseY()});
-
 	}
 
 
 	if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN) 
 	{
-
+		Point* sel = MouseHoverSelection();
+		if (sel) 
+		{
+			selected_point = sel;
+		}
 	}
 
 	//Check for selection
@@ -143,4 +146,17 @@ bool ModuleVerlet::CleanUp()
 	shapes.clear();
 
 	return true;
+}
+
+Point* ModuleVerlet::MouseHoverSelection() 
+{
+	for (unsigned int i = 0; i < world_points.count(); i++)
+	{
+		Point* tmp_shape = world_points[i];
+		if (CanBeSelected({ App->input->GetMouseX(), App->input->GetMouseY(), 0, 0 }, tmp_shape->selector_rect))
+		{
+			return world_points[i];
+		}
+	}
+	return nullptr;
 }
