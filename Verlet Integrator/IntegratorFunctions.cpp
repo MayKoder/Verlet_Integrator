@@ -4,7 +4,7 @@
 VerletIntegrator::VerletIntegrator()
 {}
 
-void VerletIntegrator::InitPoint(Circle* p, vector2 pos)
+void VerletIntegrator::InitPoint(Point* p, vector2 pos)
 {
 	p->x = pos.x;
 	p->y = pos.y;
@@ -18,7 +18,7 @@ void VerletIntegrator::InitPoint(Circle* p, vector2 pos)
 	//point.add(p);
 }
 
-void VerletIntegrator::updatePoints(Circle* p)
+void VerletIntegrator::updatePoints(Point* p)
 {
 	//FOR MORE THAN ONE POINT - NOT COMPLETE
 	/*for (int i = 0; i < point.count(); i++)

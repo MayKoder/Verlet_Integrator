@@ -4,14 +4,14 @@
 #include "p2List.h"
 #include"IntegratorFunctions.h"
 
-struct Circle;
+struct Point;
 class VerletIntegrator 
 {
 public:
 	VerletIntegrator();
 
-	void InitPoint(Circle* p, vector2 pos);
-	void updatePoints(Circle* p);
+	void InitPoint(Point* p, vector2 pos);
+	void updatePoints(Point* p);
 
 
 public:

@@ -17,34 +17,6 @@ ModuleVerlet::~ModuleVerlet()
 bool ModuleVerlet::Init()
 {
 
-
-	shapes.add(new Circle());
-	shapes.add(new Circle());
-	shapes.add(new Circle());
-	shapes.add(new Circle());
-	shapes.add(new Circle());
-	shapes.add(new Circle());
-	shapes.add(new Circle());
-	shapes.add(new Circle());
-	shapes.add(new Circle());
-	shapes.add(new Circle());
-	shapes.add(new Circle());
-	shapes.add(new Circle());
-	shapes.add(new Circle());
-	shapes.add(new Circle());
-	shapes.add(new Circle());
-
-	float offset = 0;
-	p2List_item<Circle*>* tmp_shape = shapes.getFirst();
-	while (tmp_shape)
-	{
-
-		integrator->InitPoint(tmp_shape->data, {50.f + offset, 0});
-		offset += 40.f;
-
-		tmp_shape = tmp_shape->next;
-	}
-
 	return true;
 }
 
@@ -52,16 +24,12 @@ bool ModuleVerlet::Init()
 update_status ModuleVerlet::PreUpdate()
 {
 	if(selected_shape)
-		App->renderer->DrawLine(App->input->GetMouseX(), App->input->GetMouseY(), selected_shape->x, selected_shape->y, 255, 0, 0);
+		App->renderer->DrawLine(App->input->GetMouseX(), App->input->GetMouseY(), (int)selected_shape->x, (int)selected_shape->y, 255, 0, 0);
 
-	//TODO: add lists with [] operator
-	p2List_item<Circle*>* tmp_shape = shapes.getFirst();
-	while (tmp_shape)
+	////TODO: add lists with [] operator
+	for (int i = 0; i < (int)world_points.count(); i++)
 	{
-
-		integrator->updatePoints(tmp_shape->data);
-
-		tmp_shape = tmp_shape->next;
+		integrator->updatePoints(world_points[i]);
 	}
 
 	return UPDATE_CONTINUE;
@@ -71,62 +39,74 @@ update_status ModuleVerlet::PreUpdate()
 update_status ModuleVerlet::Update()
 {
 
+	if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN) 
+	{
+		integrator->InitPoint(world_points.add(new Point())->data, {(float)App->input->GetMouseX(), (float)App->input->GetMouseY()});
+
+	}
+
+
+	if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN) 
+	{
+
+	}
+
 	//Check for selection
-	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
+	//if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
+	//{
+	//	p2List_item<Point*>* tmp_shape = shapes.getFirst();
+	//	while (tmp_shape)
+	//	{
+
+	//		if (CanBeSelected({App->input->GetMouseX(), App->input->GetMouseY(), 0, 0}, tmp_shape->data->selector_rect))
+	//		{
+	//			selected_shape = tmp_shape->data;
+	//		}
+
+	//		tmp_shape = tmp_shape->next;
+	//	}
+	//}
+	//else if(App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP && selected_shape)
+	//{
+
+	//	//int x = App->input->GetMouseX() - p.old_x;
+	//	//int y = App->input->GetMouseY() - p.old_y;		
+	//	int x = App->input->GetMouseX() - selected_shape->old_x;
+	//	int y = App->input->GetMouseY() - selected_shape->old_y;
+
+	//	if (App->input->GetMouseY() < selected_shape->old_y)
+	//	{
+	//		selected_shape->y += y / 10;
+	//	}
+	//	else
+	//	{
+	//		selected_shape->y += y / 10;
+	//	}
+
+	//	if (App->input->GetMouseX() < selected_shape->old_x)
+	//	{
+	//		selected_shape->x += x / 10;
+	//	}
+	//	else
+	//	{
+	//		selected_shape->x += x / 10;
+	//	}
+
+	//	selected_shape = nullptr;
+
+	//}
+
+
+
+
+
+	//Draw launch line
+	for (int i = 0; i < (int)world_points.count(); i++)
 	{
-		p2List_item<Circle*>* tmp_shape = shapes.getFirst();
-		while (tmp_shape)
-		{
-
-			if (CanBeSelected({App->input->GetMouseX(), App->input->GetMouseY(), 0, 0}, tmp_shape->data->selector_rect))
-			{
-				selected_shape = tmp_shape->data;
-			}
-
-			tmp_shape = tmp_shape->next;
-		}
-	}
-	else if(App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP && selected_shape)
-	{
-
-		//int x = App->input->GetMouseX() - p.old_x;
-		//int y = App->input->GetMouseY() - p.old_y;		
-		int x = App->input->GetMouseX() - selected_shape->old_x;
-		int y = App->input->GetMouseY() - selected_shape->old_y;
-
-		if (App->input->GetMouseY() < selected_shape->old_y)
-		{
-			selected_shape->y += y / 10;
-		}
-		else
-		{
-			selected_shape->y += y / 10;
-		}
-
-		if (App->input->GetMouseX() < selected_shape->old_x)
-		{
-			selected_shape->x += x / 10;
-		}
-		else
-		{
-			selected_shape->x += x / 10;
-		}
-
-		selected_shape = nullptr;
-
-	}
-
-
-	p2List_item<Circle*>* tmp_shape = shapes.getFirst();
-	while (tmp_shape)
-	{
-
-		App->renderer->DrawCircle((int)tmp_shape->data->old_x, (int)tmp_shape->data->old_y, tmp_shape->data->radius, 255, 255, 255, 255);
-		tmp_shape->data->selector_rect.x = (int)tmp_shape->data->old_x - tmp_shape->data->selector_rect.w / 2;
-		tmp_shape->data->selector_rect.y = (int)tmp_shape->data->old_y - tmp_shape->data->selector_rect.h / 2;
-		//App->renderer->DrawQuad(tmp_shape->data->selector_rect, 0, 0, 255, 100);
-
-		tmp_shape = tmp_shape->next;
+		Point* tmp_point = world_points[i];
+		App->renderer->DrawCircle((int)tmp_point->old_x, (int)tmp_point->old_y, tmp_point->radius, 255, 255, 255, 255);
+		tmp_point->selector_rect.x = (int)tmp_point->old_x - tmp_point->selector_rect.w / 2;
+		tmp_point->selector_rect.y = (int)tmp_point->old_y - tmp_point->selector_rect.h / 2;
 	}
 
 
@@ -150,13 +130,15 @@ bool ModuleVerlet::CleanUp()
 
 	delete integrator;
 
-	p2List_item<Circle*>* tmp_shape = shapes.getFirst();
-	while (tmp_shape)
+	for (int i = 0; i < (int)world_points.count(); i++)
 	{
+		delete world_points[i];
+	}
+	world_points.clear();
 
-		delete tmp_shape->data;
-
-		tmp_shape = tmp_shape->next;
+	for (int i = 0; i < (int)shapes.count(); i++)
+	{
+		delete shapes[i];
 	}
 	shapes.clear();
 

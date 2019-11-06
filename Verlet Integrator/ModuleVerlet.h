@@ -4,20 +4,8 @@
 #include "Globals.h"
 #include "Application.h"
 #include"Module.h"
-
-struct Circle {
-
-	float x;
-	float y;
-	float old_x;
-	float old_y;
-	float vx;
-	float vy;
-	int radius = 10;
-
-	SDL_Rect selector_rect;
-
-};
+#include"Shape.h"
+#include"p2List_Extended.h"
 
 
 class VerletIntegrator;
@@ -35,10 +23,11 @@ public:
 	bool CleanUp();
 
 
-	p2List<Circle*> shapes;
+	p2List_Extended<Shape*> shapes;
+	p2List_Extended<Point*> world_points;
 	VerletIntegrator* integrator;
 
-	Circle* selected_shape;
+	Point* selected_shape;
 
 	bool CanBeSelected(const SDL_Rect& rect, const SDL_Rect& r)
 	{
@@ -56,6 +45,18 @@ public:
 		}
 
 		return detectedX && detectedY;
+	}
+
+	Point* MouseHoverSelection() 
+	{
+		for (unsigned int i = 0; i < world_points.count(); i++)
+		{
+			Point* tmp_shape = world_points[i];
+			if (CanBeSelected({ App->input->GetMouseX(), App->input->GetMouseY(), 0, 0 }, tmp_shape->selector_rect))
+			{
+				return world_points[i];
+			}
+		}
 	}
 
 };
