@@ -74,5 +74,26 @@ void VerletIntegrator::updatePoints(Point* p)
 	
 }
 
+void VerletIntegrator::updateLine(Line* lne) 
+{
+	updatePoints(lne->vertexA);
+	updatePoints(lne->vertexB);
+	//
+	//lne->vertexB->old_x = lne->vertexA->old_x;
+	////lne->vertexB->old_y = lne->vertexA->old_y;
+	//lne->vertexB->vx = lne->vertexA->vx;
+	////lne->vertexB->vy = lne->vertexA->vy;
+	//lne->vertexB->x = lne->vertexA->x;
+	////lne->vertexB->y = lne->vertexA->y;
 
+
+
+	//lne->vertexB->old_x += lne->offsetX;
+	////lne->vertexB->old_y += lne->offsetY;	
+	//lne->vertexB->x = lne->vertexB->old_x;
+	////lne->vertexB->y = lne->vertexB->old_y;
+
+	//updatePoints(lne->vertexB);
+
+}
 

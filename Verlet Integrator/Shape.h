@@ -54,6 +54,14 @@ public:
 		type = LINE;
 		vertexA = pointA;
 		vertexB = pointB;
+
+		offsetX = pointB->old_x - pointA->old_x;
+		offsetY = pointB->old_y - pointA->old_y;
+
+		lenght = sqrt(pow(offsetX, 2) +
+			pow(offsetY, 2) * 1.0f);
+
+
 	}
 	~Line(){}
 
@@ -63,9 +71,9 @@ public:
 	Point* vertexA;
 	Point* vertexB;
 
-	void GetVertexA() {
-		
-	}
+	int offsetX, offsetY;
+
+	double lenght;
 
 };
 

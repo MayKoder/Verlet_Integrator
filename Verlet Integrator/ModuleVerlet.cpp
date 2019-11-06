@@ -27,9 +27,16 @@ update_status ModuleVerlet::PreUpdate()
 		App->renderer->DrawLine(App->input->GetMouseX(), App->input->GetMouseY(), (int)selected_point->x, (int)selected_point->y, 255, 0, 0);
 
 	////TODO: add lists with [] operator
-	for (int i = 0; i < (int)world_points.count(); i++)
+	for (unsigned int i = 0; i < shapes.count(); i++)
 	{
-		integrator->updatePoints(world_points[i]);
+		switch (shapes[i]->type)
+		{
+			case ShapeType::LINE:
+				Line* line = (Line*)shapes[i];
+				integrator->updateLine(line);
+				//integrator->updatePoints(line->vertexB);
+				break;
+		}
 	}
 
 	return UPDATE_CONTINUE;
@@ -113,6 +120,7 @@ update_status ModuleVerlet::Update()
 		App->renderer->DrawCircle((int)tmp_point->old_x, (int)tmp_point->old_y, tmp_point->radius, 255, 255, 255, 255);
 		tmp_point->selector_rect.x = (int)tmp_point->old_x - tmp_point->selector_rect.w / 2;
 		tmp_point->selector_rect.y = (int)tmp_point->old_y - tmp_point->selector_rect.h / 2;
+		App->renderer->DrawQuad({ (int)tmp_point->selector_rect.x, (int)tmp_point->selector_rect.y, 20, 20}, 0, 0, 255, 50);
 	}
 	for (unsigned int i = 0; i < shapes.count(); i++)
 	{

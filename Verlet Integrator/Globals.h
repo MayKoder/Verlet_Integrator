@@ -8,6 +8,9 @@ void log(const char file[], int line, const char* format, ...);
 
 #define CAP(n) ((n <= 0.0f) ? n=0.0f : (n >= 1.0f) ? n=1.0f : n=n)
 
+#define SIN(x) sin(x * 3.141592653589/180) 
+#define COS(x) cos(x * 3.141592653589/180)   
+
 typedef unsigned int uint;
 
 enum update_status
