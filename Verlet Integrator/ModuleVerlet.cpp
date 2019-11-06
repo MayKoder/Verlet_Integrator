@@ -53,63 +53,71 @@ update_status ModuleVerlet::Update()
 			selected_point = sel;
 		}
 	}
+	if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_UP && selected_point)
+	{
+		Point* sel = MouseHoverSelection();
+		if (sel && sel != selected_point)
+		{
+			shapes.add(new Line(selected_point, sel));
+		}
+		selected_point = nullptr;
+	}
 
 	//Check for selection
-	//if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
-	//{
-	//	p2List_item<Point*>* tmp_shape = shapes.getFirst();
-	//	while (tmp_shape)
-	//	{
+	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
+	{
+		Point* sel = MouseHoverSelection();
+		if (sel)
+		{
+			selected_point = sel;
+		}
+	}
+	else if(App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP && selected_point)
+	{
 
-	//		if (CanBeSelected({App->input->GetMouseX(), App->input->GetMouseY(), 0, 0}, tmp_shape->data->selector_rect))
-	//		{
-	//			selected_shape = tmp_shape->data;
-	//		}
+		//int x = App->input->GetMouseX() - p.old_x;
+		//int y = App->input->GetMouseY() - p.old_y;		
+		int x = App->input->GetMouseX() - selected_point->old_x;
+		int y = App->input->GetMouseY() - selected_point->old_y;
 
-	//		tmp_shape = tmp_shape->next;
-	//	}
-	//}
-	//else if(App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP && selected_shape)
-	//{
+		if (App->input->GetMouseY() < selected_point->old_y)
+		{
+			selected_point->y += y / 10;
+		}
+		else
+		{
+			selected_point->y += y / 10;
+		}
 
-	//	//int x = App->input->GetMouseX() - p.old_x;
-	//	//int y = App->input->GetMouseY() - p.old_y;		
-	//	int x = App->input->GetMouseX() - selected_shape->old_x;
-	//	int y = App->input->GetMouseY() - selected_shape->old_y;
+		if (App->input->GetMouseX() < selected_point->old_x)
+		{
+			selected_point->x += x / 10;
+		}
+		else
+		{
+			selected_point->x += x / 10;
+		}
 
-	//	if (App->input->GetMouseY() < selected_shape->old_y)
-	//	{
-	//		selected_shape->y += y / 10;
-	//	}
-	//	else
-	//	{
-	//		selected_shape->y += y / 10;
-	//	}
+		selected_point = nullptr;
 
-	//	if (App->input->GetMouseX() < selected_shape->old_x)
-	//	{
-	//		selected_shape->x += x / 10;
-	//	}
-	//	else
-	//	{
-	//		selected_shape->x += x / 10;
-	//	}
-
-	//	selected_shape = nullptr;
-
-	//}
+	}
 
 
 
 
 
 	//Draw launch line
-	for (int i = 0; i < (int)world_points.count(); i++)
+	for (unsigned int i = 0; i < world_points.count(); i++)
 	{
 		Point* tmp_point = world_points[i];
 		App->renderer->DrawCircle((int)tmp_point->old_x, (int)tmp_point->old_y, tmp_point->radius, 255, 255, 255, 255);
 		tmp_point->selector_rect.x = (int)tmp_point->old_x - tmp_point->selector_rect.w / 2;
 		tmp_point->selector_rect.y = (int)tmp_point->old_y - tmp_point->selector_rect.h / 2;
+	}
+	for (unsigned int i = 0; i < shapes.count(); i++)
+	{
+		Line* tmp = (Line*)shapes[i];
+		App->renderer->DrawLine(tmp->vertexA->old_x, tmp->vertexA->old_y, tmp->vertexB->old_x, tmp->vertexB->old_y, 0, 255, 0, 255);
 	}
 
 

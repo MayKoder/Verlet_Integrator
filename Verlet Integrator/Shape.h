@@ -20,7 +20,7 @@ struct Point {
 
 enum ShapeType
 {
-	NO_SHAPE, CIRCLE
+	NO_SHAPE, LINE, CIRCLE
 };
 
 
@@ -48,9 +48,10 @@ public:
 class Line : public Shape
 {
 public:
-	Line(ShapeType s_type, Point* pointA, Point* pointB)
+
+	Line(Point* pointA, Point* pointB)
 	{
-		type = s_type;
+		type = LINE;
 		vertexA = pointA;
 		vertexB = pointB;
 	}
@@ -61,6 +62,10 @@ public:
 	//Edge
 	Point* vertexA;
 	Point* vertexB;
+
+	void GetVertexA() {
+		
+	}
 
 };
 
