@@ -44,8 +44,7 @@ void VerletIntegrator::updatePoints(Point* p)
 	p->x += p->vx;
 	p->y += p->vy;
 	p->y += gravity;
-	LOG("POINT X: %.2f", p->x);
-	LOG("POINT Y: %.2f", p->y);
+	LOG("POINT X: %.2f, POINT Y: %.2f", p->x, p->y);
 
 	//RIGHT LIMIT
 	if (p->x > floor_Limit_X) //SHOULD BE CHANGED, INCLUDING SDL AND SO SCREEN WIDTH INSTEAD OF 200
