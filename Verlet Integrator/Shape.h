@@ -63,8 +63,22 @@ public:
 		vertexA = pointA;
 		vertexB = pointB;
 
-		offsetX = (int)(pointB->old_x - pointA->old_x);
-		offsetY = (int)(pointB->old_y - pointA->old_y);
+		Point* leftPoint;
+		Point* rightPoint;
+
+		if (vertexA->old_x > vertexB->old_x)
+		{
+			rightPoint = vertexA;
+			leftPoint = vertexB;
+		}
+		else
+		{
+			rightPoint = vertexB;
+			leftPoint = vertexA;
+		}
+
+		offsetX = (int)(rightPoint->old_x - leftPoint->old_x);
+		offsetY = (int)(rightPoint->old_y - leftPoint->old_y);
 
 		lenght = sqrt(pow(offsetX, 2) +
 			pow(offsetY, 2) * 1.0f);
