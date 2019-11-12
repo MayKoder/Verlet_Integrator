@@ -14,7 +14,6 @@ public:
 
 	void InitPoint(Point* p, vector2 pos);
 	void updatePoints(Point* p);
-	void updateLine(Line* lne);
 
 
 public:

@@ -2,6 +2,7 @@
 #define _SHAPES_H_
 
 #include"IntegratorFunctions.h"
+#include"ModuleVerlet.h"
 #include"SDL/include/SDL.h"
 
 struct Point {
@@ -33,30 +34,37 @@ public:
 		type = NO_SHAPE;
 	}
 
-	Shape(ShapeType s_type)
+	Shape(ShapeType s_type, VerletIntegrator* s_integrator)
 	{
 		type = s_type;
+		integrator = s_integrator;
 	}
+
+	virtual void UpdateShape() = 0;
+
 	~Shape() {}
 
 public:
 
 	ShapeType type;
+	VerletIntegrator* integrator;
 
 };
 
+class VerletIntegrator;
 class Line : public Shape
 {
 public:
 
-	Line(Point* pointA, Point* pointB)
+	Line(Point* pointA, Point* pointB, VerletIntegrator* s_integrator)
 	{
 		type = LINE;
+		integrator = s_integrator;
 		vertexA = pointA;
 		vertexB = pointB;
 
-		offsetX = pointB->old_x - pointA->old_x;
-		offsetY = pointB->old_y - pointA->old_y;
+		offsetX = (int)(pointB->old_x - pointA->old_x);
+		offsetY = (int)(pointB->old_y - pointA->old_y);
 
 		lenght = sqrt(pow(offsetX, 2) +
 			pow(offsetY, 2) * 1.0f);
@@ -64,6 +72,8 @@ public:
 
 	}
 	~Line(){}
+
+	void UpdateShape();
 
 public:
 

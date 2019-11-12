@@ -100,5 +100,8 @@
     <ClCompile Include="ModuleVerlet.cpp">
       <Filter>Verlet Integrator Files</Filter>
     </ClCompile>
+    <ClCompile Include="Shape.cpp">
+      <Filter>Header Files\Containers</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

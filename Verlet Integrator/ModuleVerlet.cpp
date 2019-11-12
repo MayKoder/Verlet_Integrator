@@ -29,14 +29,7 @@ update_status ModuleVerlet::PreUpdate()
 	////TODO: add lists with [] operator
 	for (unsigned int i = 0; i < shapes.count(); i++)
 	{
-		switch (shapes[i]->type)
-		{
-			case ShapeType::LINE:
-				Line* line = (Line*)shapes[i];
-				integrator->updateLine(line);
-				//integrator->updatePoints(line->vertexB);
-				break;
-		}
+		shapes[i]->UpdateShape();
 	}
 
 	return UPDATE_CONTINUE;
@@ -65,7 +58,7 @@ update_status ModuleVerlet::Update()
 		Point* sel = MouseHoverSelection();
 		if (sel && sel != selected_point)
 		{
-			shapes.add(new Line(selected_point, sel));
+			shapes.add(new Line(selected_point, sel, integrator));
 		}
 		selected_point = nullptr;
 	}
@@ -84,8 +77,8 @@ update_status ModuleVerlet::Update()
 
 		//int x = App->input->GetMouseX() - p.old_x;
 		//int y = App->input->GetMouseY() - p.old_y;		
-		int x = App->input->GetMouseX() - selected_point->old_x;
-		int y = App->input->GetMouseY() - selected_point->old_y;
+		int x = App->input->GetMouseX() - (int)selected_point->old_x;
+		int y = App->input->GetMouseY() - (int)selected_point->old_y;
 
 		if (App->input->GetMouseY() < selected_point->old_y)
 		{
@@ -120,12 +113,12 @@ update_status ModuleVerlet::Update()
 		App->renderer->DrawCircle((int)tmp_point->old_x, (int)tmp_point->old_y, tmp_point->radius, 255, 255, 255, 255);
 		tmp_point->selector_rect.x = (int)tmp_point->old_x - tmp_point->selector_rect.w / 2;
 		tmp_point->selector_rect.y = (int)tmp_point->old_y - tmp_point->selector_rect.h / 2;
-		//App->renderer->DrawQuad({ (int)tmp_point->selector_rect.x, (int)tmp_point->selector_rect.y, 20, 20}, 0, 0, 255, 50);
+		App->renderer->DrawQuad({ (int)tmp_point->selector_rect.x, (int)tmp_point->selector_rect.y, 20, 20}, 0, 0, 255, 50);
 	}
 	for (unsigned int i = 0; i < shapes.count(); i++)
 	{
 		Line* tmp = (Line*)shapes[i];
-		App->renderer->DrawLine(tmp->vertexA->old_x, tmp->vertexA->old_y, tmp->vertexB->old_x, tmp->vertexB->old_y, 0, 255, 0, 255);
+		App->renderer->DrawLine((int)tmp->vertexA->old_x, (int)tmp->vertexA->old_y, (int)tmp->vertexB->old_x, (int)tmp->vertexB->old_y, 0, 255, 0, 255);
 	}
 
 

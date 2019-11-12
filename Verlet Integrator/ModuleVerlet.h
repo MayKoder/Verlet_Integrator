@@ -8,6 +8,8 @@
 #include"p2List_Extended.h"
 
 class VerletIntegrator;
+class Shape;
+struct Point;
 class ModuleVerlet : public Module
 {
 public:
