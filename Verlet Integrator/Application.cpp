@@ -8,6 +8,7 @@ Application::Application()
 	input = new ModuleInput(this);
 	audio = new ModuleAudio(this, true);
 	verlet = new ModuleVerlet(this, true);
+	UI = new ModuleUI(this, true);
 
 	// The order of calls is very important!
 	// Modules will Init() Start() and Update in this order
@@ -20,6 +21,7 @@ Application::Application()
 	AddModule(input);
 	AddModule(audio);
 	AddModule(verlet);
+	AddModule(UI);
 
 }
 

@@ -59,26 +59,5 @@ void Line::UpdateShape()
 			}
 		}
 	}
-	if (offsetY != newOffsetY) 
-	{
-		if (newOffsetY > offsetY)
-		{
-			//La linia es mes curta
-			//int correction = offsetY - newOffsetY;
-
-			//rightPoint->old_y += correction / 2;
-			//leftPoint->old_y -= correction / 2;
-		}
-		else
-		{
-			//La linia es mes llarga
-		}
-	}
-
-
-	//rightPoint->x = rightPoint->old_x;
-	//leftPoint->x = leftPoint->old_x;
-	//rightPoint->y = rightPoint->old_y;
-	//leftPoint->y = leftPoint->old_y;
 
 }

@@ -162,7 +162,7 @@ Point* ModuleVerlet::MouseHoverSelection()
 	for (unsigned int i = 0; i < world_points.count(); i++)
 	{
 		Point* tmp_shape = world_points[i];
-		if (CanBeSelected({ App->input->GetMouseX(), App->input->GetMouseY(), 0, 0 }, tmp_shape->selector_rect))
+		if (App->UI->CanBeSelected({ App->input->GetMouseX(), App->input->GetMouseY(), 0, 0 }, tmp_shape->selector_rect))
 		{
 			return world_points[i];
 		}

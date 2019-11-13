@@ -30,24 +30,6 @@ public:
 
 	Point* selected_point;
 
-	bool CanBeSelected(const SDL_Rect& rect, const SDL_Rect& r)
-	{
-		bool detectedX = true;
-		bool detectedY = true;
-
-		if ((rect.x + rect.w) < r.x || (r.x + r.w) < rect.x)
-		{
-			detectedX = false;
-		}
-
-		if (rect.y < r.y || (rect.y + rect.h) > r.y + r.h)
-		{
-			detectedY = false;
-		}
-
-		return detectedX && detectedY;
-	}
-
 	Point* MouseHoverSelection();
 
 };

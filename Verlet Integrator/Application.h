@@ -10,6 +10,7 @@
 #include "ModuleInput.h"
 #include "ModuleAudio.h"
 #include"ModuleVerlet.h"
+#include"ModuleUI.h"
 
 class ModuleVerlet;
 class Application
@@ -21,6 +22,7 @@ public:
 	ModuleInput* input;
 	ModuleAudio* audio;
 	ModuleVerlet* verlet;
+	ModuleUI* UI;
 
 private:
 
