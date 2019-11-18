@@ -9,8 +9,9 @@
 #include "ModuleTextures.h"
 #include "ModuleInput.h"
 #include "ModuleAudio.h"
-#include"ModuleVerlet.h"
-#include"ModuleUI.h"
+#include "ModuleVerlet.h"
+#include "ModuleUI.h"
+#include "GravitationalField.h"
 
 class ModuleVerlet;
 class Application
@@ -23,6 +24,7 @@ public:
 	ModuleAudio* audio;
 	ModuleVerlet* verlet;
 	ModuleUI* UI;
+	GravitationalField* gravitationalField;
 
 private:
 

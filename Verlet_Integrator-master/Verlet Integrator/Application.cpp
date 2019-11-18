@@ -9,6 +9,7 @@ Application::Application()
 	audio = new ModuleAudio(this, true);
 	verlet = new ModuleVerlet(this, true);
 	UI = new ModuleUI(this, true);
+	gravitationalField = new GravitationalField(this, true);
 
 	// The order of calls is very important!
 	// Modules will Init() Start() and Update in this order
@@ -20,6 +21,7 @@ Application::Application()
 	AddModule(textures);
 	AddModule(input);
 	AddModule(audio);
+	AddModule(gravitationalField);
 	AddModule(verlet);
 	AddModule(UI);
 

@@ -20,7 +20,22 @@ void VerletIntegrator::InitPoint(Point* p, vector2 pos)
 
 void VerletIntegrator::updatePoints(Point* p)
 {
+	//FOR MORE THAN ONE POINT - NOT COMPLETE
+	/*for (int i = 0; i < point.count(); i++)
+	{
+		Point p = point[i];
+		float vx = p.x - p.old_x;
+		float vy = p.y - p.old_y;
 
+		p.old_x = p.x;
+		p.old_y = p.y;
+		p.x += vx;
+		p.y += vy;
+
+		point.add(p);
+
+	}*/
+	
 	p->vx = (p->x - p->old_x) /** friction*/;
 	p->vy = (p->y - p->old_y) /** friction*/;
 

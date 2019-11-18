@@ -32,6 +32,8 @@ public:
 
 	Point* MouseHoverSelection();
 
+	bool bigPlanetEnabled = false;
+
 };
 
 #endif // __ModuleVerlet_H__

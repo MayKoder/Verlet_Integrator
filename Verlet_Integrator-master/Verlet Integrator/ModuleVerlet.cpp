@@ -3,7 +3,6 @@
 #include "ModuleVerlet.h"
 #include"IntegratorFunctions.h"
 
-
 ModuleVerlet::ModuleVerlet(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 	integrator = new VerletIntegrator();
@@ -44,6 +43,11 @@ update_status ModuleVerlet::Update()
 		integrator->InitPoint(world_points.add(new Point())->data, {(float)App->input->GetMouseX(), (float)App->input->GetMouseY()});
 	}
 
+	//MYTODO
+	if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
+	{
+		bigPlanetEnabled = true;
+	}
 
 	if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN) 
 	{
@@ -82,7 +86,7 @@ update_status ModuleVerlet::Update()
 
 		if (App->input->GetMouseY() < selected_point->old_y)
 		{
-			selected_point->y += y / 10;
+			selected_point->y += y / 10;  
 		}
 		else
 		{
