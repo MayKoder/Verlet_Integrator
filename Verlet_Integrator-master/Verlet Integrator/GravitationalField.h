@@ -10,8 +10,8 @@
 
 //calcula nueva po cogiendo actual sumando la velocidad por delta t (increment pos hacia ...)
 
-#define G 2 //6.67 //blablabla ARREGLAR, MYTODO ^^
-#define TIME 0.3
+#define G -6.67 //6.67 //blablabla ARREGLAR, MYTODO ^^
+#define TIME 0.2
 
 struct Point;
 class Line;
@@ -25,7 +25,7 @@ public:
 	float gravity = 0;
 	float mass = 0; //planet radius
 	vector2 position = { 0, 0 };
-	float speed = 0;
+	vector2 speed = { 0, 0 };
 
 	Planet();
 };
@@ -63,8 +63,13 @@ public:
 public:
 	Planet* bigPlanet;
 	PlanetObject* smallPlanetObject;
-	vector2 speed = { 0.f, 0.f };
-	vector2 acceleration = { -9.8f, -9.8f };
+	float Fg = 0;
+	vector2 r;
+	float moduleR;
+	vector2 Fg1, Fg2;
+	vector2 acc1, acc2;
+	vector2 speed1, speed2;
+	vector2 angAcc1, angAcc2;
 
 };
 
