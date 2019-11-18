@@ -11,6 +11,7 @@
 //calcula nueva po cogiendo actual sumando la velocidad por delta t (increment pos hacia ...)
 
 #define G 2 //6.67 //blablabla ARREGLAR, MYTODO ^^
+#define TIME 0.4
 
 struct Point;
 class Line;
