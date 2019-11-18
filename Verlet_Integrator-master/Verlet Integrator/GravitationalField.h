@@ -11,7 +11,7 @@
 //calcula nueva po cogiendo actual sumando la velocidad por delta t (increment pos hacia ...)
 
 #define G 2 //6.67 //blablabla ARREGLAR, MYTODO ^^
-#define TIME 0.4
+#define TIME 0.5
 
 struct Point;
 class Line;
@@ -58,11 +58,12 @@ public:
 
 	void DrawBigPlanet(Planet* Earth);
 	void DrawSmallPlanet(PlanetObject* Moon);
+	vector2 Move(Planet* Earth, PlanetObject* Moon);
 
 public:
 	Planet* bigPlanet;
 	PlanetObject* smallPlanetObject;
-	vector2 Move(Planet* Earth, PlanetObject* Moon);
+	vector2 acceleration = { 3.f, 3.f };
 
 };
 
