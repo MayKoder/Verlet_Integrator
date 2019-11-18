@@ -59,6 +59,7 @@ public:
 	bool CleanUp();
 
 	void DrawBigPlanet(Planet* Earth);
+	void DrawSmallPlanet(PlanetObject* Moon);
 
 public:
 	Planet* bigPlanet;

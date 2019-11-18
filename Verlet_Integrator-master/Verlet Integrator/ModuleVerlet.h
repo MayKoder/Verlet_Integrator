@@ -33,6 +33,7 @@ public:
 	Point* MouseHoverSelection();
 
 	bool bigPlanetEnabled = false;
+	bool smallPlanetEnabled = false;
 
 };
 
