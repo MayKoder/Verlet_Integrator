@@ -4,16 +4,21 @@
 #include "p2List.h"
 #include"IntegratorFunctions.h"
 #include"Shape.h"
+#include"Application.h"
 
 struct Point;
 class Line;
+class Application;
 class VerletIntegrator 
 {
 public:
 	VerletIntegrator();
+	VerletIntegrator(Application* app);
 
 	void InitPoint(Point* p, vector2 pos);
 	void updatePoints(Point* p);
+	//void OnCollision();
+	Application* App;
 
 
 public:

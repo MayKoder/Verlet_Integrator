@@ -6,7 +6,7 @@
 
 ModuleVerlet::ModuleVerlet(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
-	integrator = new VerletIntegrator();
+	integrator = new VerletIntegrator(app);
 	creation_type = ShapeType::CIRCLE;
 }
 
@@ -24,14 +24,15 @@ bool ModuleVerlet::Init()
 // PreUpdate: clear buffer
 update_status ModuleVerlet::PreUpdate()
 {
-	if(selected_point)
-		App->renderer->DrawLine(App->input->GetMouseX(), App->input->GetMouseY(), (int)selected_point->x, (int)selected_point->y, 255, 0, 0);
 
 	////TODO: add lists with [] operator
 	for (unsigned int i = 0; i < shapes.count(); i++)
 	{
 		shapes[i]->UpdateShape();
 	}
+
+	if (selected_point)
+		App->renderer->DrawLine(App->input->GetMouseX(), App->input->GetMouseY(), (int)selected_point->x, (int)selected_point->y, 255, 0, 0);
 
 	return UPDATE_CONTINUE;
 }
@@ -100,20 +101,20 @@ update_status ModuleVerlet::Update()
 
 		if (App->input->GetMouseY() < selected_point->y)
 		{
-			selected_point->vy += y / 5;
+			selected_point->vy += y * 3;
 		}
 		else
 		{
-			selected_point->vy += y / 5;
+			selected_point->vy += y * 3;
 		}
 
 		if (App->input->GetMouseX() < selected_point->x)
 		{
-			selected_point->vx += x / 5;
+			selected_point->vx += x * 3;
 		}
 		else
 		{
-			selected_point->vx += x / 5;
+			selected_point->vx += x * 3;
 		}
 
 		selected_point = nullptr;

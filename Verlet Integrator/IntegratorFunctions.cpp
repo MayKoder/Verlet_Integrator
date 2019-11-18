@@ -4,6 +4,11 @@
 VerletIntegrator::VerletIntegrator()
 {}
 
+VerletIntegrator::VerletIntegrator(Application* app)
+{
+	App = app;
+}
+
 void VerletIntegrator::InitPoint(Point* p, vector2 pos)
 {
 	p->x = pos.x;
@@ -11,7 +16,7 @@ void VerletIntegrator::InitPoint(Point* p, vector2 pos)
 	p->old_x = pos.x;
 	p->old_y = pos.y;
 	p->vx =	0.f;
-	p->vy = gravity;
+	p->vy = 0.f;
 	p->dt = (1.f/ 60.f);
 
 	p->selector_rect = { (int)pos.x, (int)pos.y, p->radius * 2, p->radius * 2};
@@ -63,27 +68,67 @@ void VerletIntegrator::updatePoints(Point* p)
 	//	p->y = 0 + (float)p->radius;
 	//	p->old_y = p->y + p->vy * bounce;
 	//}
-	
-	p->x = p->x + (p->vx * p->dt) + (0.5f * 0 * (p->dt * p->dt));
+
+
+	p->x = p->x + (p->vx * p->dt) + (0.5f * 0.f * (p->dt * p->dt));
 	p->y = p->y + (p->vy * p->dt) + (0.5f * gravity * (p->dt * p->dt));
 
-	if (p->vy != 0) 
-	{
-		p->vy += 5.f;
-	}
 
-	//TOP LIMIT
-	if (p->y >= floor_Limit_Y) //SHOULD BE CHANGED, INCLUDING SDL AND SO SCREEN HEIGHT INSTEAD OF 200
+
+
+	//BOTTOM LIMIT
+	if (p->y > (float)floor_Limit_Y)
 	{
+		p->y = (float)floor_Limit_Y;
+		p->vy *= -1.f * bounce;
+	}
+	else if(p->y <= (float)p->radius)
+	{
+		p->y = (float)p->radius;
 		p->vy *= -1 * bounce;
 	}
 
+	if (p->x >= (float)floor_Limit_X) 
+	{
+		p->x = floor_Limit_X;
+		p->vx *= -1 * bounce;
+	}
+	else if(p->x <= (float)p->radius)
+	{
+		p->x = (float)p->radius;
+		p->vx *= -1 * bounce;
+	}
+
+	for (unsigned int j = 0; j < App->verlet->world_points.count(); j++)
+	{
+		Point* check_Point = App->verlet->world_points[j];
+		if (App->verlet->world_points[j] != p)
+		{
+			if (pow((check_Point->x - p->x), 2) + pow((p->y - check_Point->y), 2) <= pow((p->radius + check_Point->radius), 2))
+			{
+				p->vx *= -1;
+				p->vy *= -1;
+
+				check_Point->vx = p->vx;
+				check_Point->vx *= -1;
+
+				check_Point->vy = p->vy;
+				check_Point->vy *= -1;
+			}
+		}
+	}
 
 
-
+	p->vx = p->vx + (0.f * p->dt);
+	p->vy = p->vy + (gravity * p->dt);
 
 	LOG("%f", p->vy);
 
 
 }
+
+//void VerletIntegrator::OnCollision(vector2 point, Point* p) 
+//{
+//
+//}
 

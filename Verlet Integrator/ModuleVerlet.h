@@ -9,6 +9,7 @@
 
 class VerletIntegrator;
 class Shape;
+enum ShapeType;
 struct Point;
 class ModuleVerlet : public Module
 {

@@ -59,9 +59,6 @@
     <ClInclude Include="ModuleVerlet.h">
       <Filter>Verlet Integrator Files</Filter>
     </ClInclude>
-    <ClInclude Include="Shape.h">
-      <Filter>Header Files\Containers</Filter>
-    </ClInclude>
     <ClInclude Include="p2List_Extended.h">
       <Filter>Header Files\Containers</Filter>
     </ClInclude>
@@ -70,6 +67,9 @@
     </ClInclude>
     <ClInclude Include="ModuleUI.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Shape.h">
+      <Filter>Verlet Integrator Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -103,11 +103,11 @@
     <ClCompile Include="ModuleVerlet.cpp">
       <Filter>Verlet Integrator Files</Filter>
     </ClCompile>
-    <ClCompile Include="Shape.cpp">
-      <Filter>Header Files\Containers</Filter>
-    </ClCompile>
     <ClCompile Include="ModuleUI.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Shape.cpp">
+      <Filter>Verlet Integrator Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
