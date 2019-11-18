@@ -19,13 +19,13 @@ bool GravitationalField::Init()
 	//BIG PLANET SETTING VARS
 	bigPlanet->atmosphere = 150.f;
 	bigPlanet->gravity = 9.806f;
-	bigPlanet->mass = 50.f;
+	bigPlanet->mass = 100.f;
 	bigPlanet->position = { SCREEN_WIDTH * 0.5, SCREEN_HEIGHT * 0.5 };
 	///speed and pos = 0
 
 	//SMALL PLANET SETTING VARS
 	smallPlanetObject->mass = 10.f;
-	smallPlanetObject->position = { (SCREEN_WIDTH * 0.5) - 200, (SCREEN_HEIGHT * 0.5) + 180 };
+	smallPlanetObject->position = { (SCREEN_WIDTH * 0.5) - 200, (SCREEN_HEIGHT * 0.5) };
 	smallPlanetObject->speed = { 1.f, 1.f };
 
 	return true;
@@ -91,9 +91,8 @@ vector2 GravitationalField::Move(Planet* Earth, PlanetObject* Moon)
 	float distance = Earth->position.x - Moon->position.x;
 	float h = (Earth->position.y) - Moon->position.y;
 
-	Moon->position.x = Moon->position.x + (2 * TIME) - (0.5 * (-9.8 - distance) * TIME * TIME);
-	Moon->position.y = Moon->position.y + (2 * TIME) - (0.5 * (-9.8 - h) * TIME * TIME);
-	LOG("PositionY: %f", Moon->position.y);
+	Moon->position.x = Moon->position.x + (speed.x * TIME) - (0.5 * (acceleration.x - distance) * TIME * TIME);
+	Moon->position.y = Moon->position.y + (speed.y * TIME) - (0.5 * (acceleration.y - h) * TIME * TIME);
 
 	return Moon->position;
 }
