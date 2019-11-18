@@ -49,6 +49,8 @@ update_status GravitationalField::Update()
 	if (App->verlet->smallPlanetEnabled == true)
 	{
 		DrawSmallPlanet(smallPlanetObject);
+		Move(smallPlanetObject);
+		//set speed and then update the smallPlanet position: VERLET THKS :D
 	}
 
 	return UPDATE_CONTINUE;
@@ -74,9 +76,7 @@ bool GravitationalField::CleanUp()
 
 
 void GravitationalField::DrawBigPlanet(Planet* Earth)
-{
-	//MYTODO
-	
+{	
 	App->renderer->DrawCircle(Earth->position.x, Earth->position.y, Earth->mass, 255, 255, 255, 255);
 	App->renderer->DrawCircle(Earth->position.x, Earth->position.y, Earth->atmosphere, 255, 255, 255, 255);
 }
@@ -86,32 +86,19 @@ void GravitationalField::DrawSmallPlanet(PlanetObject* Moon)
 	App->renderer->DrawCircle(Moon->position.x, Moon->position.y, Moon->mass, 255, 255, 255, 255);
 }
 
+vector2 GravitationalField::Move(PlanetObject* Moon)
+{
+	//new position = (speed * speed) / distanceToCenterPlanet
+	//vector2 newPosition = { 0.f, 0.f };
 
+	Moon->position.x += 1.f;
+	Moon->position.y -= 1.f;
 
-
-
-
-
+	return Moon->position;
+}
 
 Planet::Planet()
-{
-}
+{}
 
 PlanetObject::PlanetObject()
-{
-}
-
-void PlanetObject::PrintPlanetObject(PlanetObject Moon)
-{
-	//Create circle
-}
-
-vector2 PlanetObject::Move(Planet Earth, PlanetObject Moon)
-{
-	if (Earth.atmosphere > Moon.position.y)
-	{
-		
-	}
-
-	return position;
-}
+{}

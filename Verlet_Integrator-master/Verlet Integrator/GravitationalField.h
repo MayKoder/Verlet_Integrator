@@ -37,10 +37,7 @@ public:
 	float mass = 0;
 	vector2 position = { 0, 0 };
 
-	PlanetObject();
-	void PrintPlanetObject(PlanetObject Moon);
-	vector2 Move(Planet Earth, PlanetObject Moon);
-	
+	PlanetObject();	
 };
 
 //-----------------------------------------------
@@ -64,6 +61,7 @@ public:
 public:
 	Planet* bigPlanet;
 	PlanetObject* smallPlanetObject;
+	vector2 Move(PlanetObject* Moon);
 
 };
 
