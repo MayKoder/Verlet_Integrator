@@ -1,5 +1,15 @@
 #include"Shape.h"
 
+Circle::Circle(Point* s_point, VerletIntegrator* s_integrator, Application* app)
+{
+	App = app;
+	type = CIRCLE;
+	integrator = s_integrator;
+	point = s_point;
+
+	App->verlet->world_points.add(point);
+	integrator->InitPoint(point, { (float)App->input->GetMouseX(), (float)App->input->GetMouseY() });
+}
 void Line::UpdateShape() 
 {
 	integrator->updatePoints(vertexA);
@@ -60,4 +70,17 @@ void Line::UpdateShape()
 		}
 	}
 
+}
+void Line::Draw() 
+{
+	App->renderer->DrawLine((int)vertexA->old_x, (int)vertexA->old_y, (int)vertexB->old_x, (int)vertexB->old_y, 0, 255, 0, 255);
+}
+
+void Circle::UpdateShape()
+{
+	integrator->updatePoints(point);
+}
+void Circle::Draw() 
+{
+	App->renderer->DrawCircle((int)point->x, (int)point->y, point->radius, 255, 255, 255, 255);
 }

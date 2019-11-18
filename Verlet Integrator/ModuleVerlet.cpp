@@ -7,6 +7,7 @@
 ModuleVerlet::ModuleVerlet(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 	integrator = new VerletIntegrator();
+	creation_type = ShapeType::CIRCLE;
 }
 
 // Destructor
@@ -41,7 +42,24 @@ update_status ModuleVerlet::Update()
 
 	if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN) 
 	{
-		integrator->InitPoint(world_points.add(new Point())->data, {(float)App->input->GetMouseX(), (float)App->input->GetMouseY()});
+
+		
+
+		switch (creation_type)
+		{
+		case NO_SHAPE:
+			break;
+		case LINE:
+			//integrator->InitPoint(world_points.add(new Point())->data, { (float)App->input->GetMouseX(), (float)App->input->GetMouseY() });
+			break;
+		case CIRCLE:
+
+			shapes.add(new Circle(new Point(), integrator, App));
+			break;
+		case BOX:
+			break;
+		}
+
 	}
 
 
@@ -58,7 +76,7 @@ update_status ModuleVerlet::Update()
 		Point* sel = MouseHoverSelection();
 		if (sel && sel != selected_point)
 		{
-			shapes.add(new Line(selected_point, sel, integrator));
+			shapes.add(new Line(selected_point, sel, integrator, App));
 		}
 		selected_point = nullptr;
 	}
@@ -77,25 +95,25 @@ update_status ModuleVerlet::Update()
 
 		//int x = App->input->GetMouseX() - p.old_x;
 		//int y = App->input->GetMouseY() - p.old_y;		
-		int x = App->input->GetMouseX() - (int)selected_point->old_x;
-		int y = App->input->GetMouseY() - (int)selected_point->old_y;
+		int x = App->input->GetMouseX() - (int)selected_point->x;
+		int y = App->input->GetMouseY() - (int)selected_point->y;
 
-		if (App->input->GetMouseY() < selected_point->old_y)
+		if (App->input->GetMouseY() < selected_point->y)
 		{
-			selected_point->y += y / 10;
+			selected_point->vy += y / 5;
 		}
 		else
 		{
-			selected_point->y += y / 10;
+			selected_point->vy += y / 5;
 		}
 
-		if (App->input->GetMouseX() < selected_point->old_x)
+		if (App->input->GetMouseX() < selected_point->x)
 		{
-			selected_point->x += x / 10;
+			selected_point->vx += x / 5;
 		}
 		else
 		{
-			selected_point->x += x / 10;
+			selected_point->vx += x / 5;
 		}
 
 		selected_point = nullptr;
@@ -110,15 +128,15 @@ update_status ModuleVerlet::Update()
 	for (unsigned int i = 0; i < world_points.count(); i++)
 	{
 		Point* tmp_point = world_points[i];
-		App->renderer->DrawCircle((int)tmp_point->old_x, (int)tmp_point->old_y, tmp_point->radius, 255, 255, 255, 255);
-		tmp_point->selector_rect.x = (int)tmp_point->old_x - tmp_point->selector_rect.w / 2;
-		tmp_point->selector_rect.y = (int)tmp_point->old_y - tmp_point->selector_rect.h / 2;
+		App->renderer->DrawCircle((int)tmp_point->x, (int)tmp_point->y, tmp_point->radius, 255, 255, 255, 255);
+		tmp_point->selector_rect.x = (int)tmp_point->x - tmp_point->selector_rect.w / 2;
+		tmp_point->selector_rect.y = (int)tmp_point->y - tmp_point->selector_rect.h / 2;
 		App->renderer->DrawQuad({ (int)tmp_point->selector_rect.x, (int)tmp_point->selector_rect.y, 20, 20}, 0, 0, 255, 50);
 	}
 	for (unsigned int i = 0; i < shapes.count(); i++)
 	{
-		Line* tmp = (Line*)shapes[i];
-		App->renderer->DrawLine((int)tmp->vertexA->old_x, (int)tmp->vertexA->old_y, (int)tmp->vertexB->old_x, (int)tmp->vertexB->old_y, 0, 255, 0, 255);
+		Shape* tmp = shapes[i];
+		tmp->Draw();
 	}
 
 

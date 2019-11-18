@@ -20,7 +20,8 @@ public:
 
 	//p2List<Point> point;
 	float bounce = 0.9f;
-	float gravity = 0.6f;
+	//float gravity = 9.81f;
+	float gravity = 500.f;
 	float friction = 0.3f;
 
 	int floor_Limit_Y = SCREEN_HEIGHT - 10;

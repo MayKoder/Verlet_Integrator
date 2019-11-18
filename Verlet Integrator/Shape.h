@@ -4,7 +4,9 @@
 #include"IntegratorFunctions.h"
 #include"ModuleVerlet.h"
 #include"SDL/include/SDL.h"
+#include"Application.h"
 
+class Application;
 struct Point {
 
 	float x;
@@ -14,6 +16,24 @@ struct Point {
 	float vx;
 	float vy;
 	int radius = 10;
+
+	//This needs to be converted to a real dt
+	float dt;
+
+	/*
+	float mass;
+	float newVX;
+	float newVY;
+	float currentVX;
+	float currentVY;
+	float sum_forcesX;
+	float sum_forcesY;
+	float acc_x;
+	float acc_y;
+
+	currentX = 
+
+	*/
 
 	SDL_Rect selector_rect;
 };
@@ -41,6 +61,7 @@ public:
 	}
 
 	virtual void UpdateShape() = 0;
+	virtual void Draw() = 0;
 
 	~Shape() {}
 
@@ -48,6 +69,7 @@ public:
 
 	ShapeType type;
 	VerletIntegrator* integrator;
+	Application* App = nullptr;
 
 };
 
@@ -56,9 +78,10 @@ class Line : public Shape
 {
 public:
 
-	Line(Point* pointA, Point* pointB, VerletIntegrator* s_integrator)
+	Line(Point* pointA, Point* pointB, VerletIntegrator* s_integrator, Application* app)
 	{
 		type = LINE;
+		App = app;
 		integrator = s_integrator;
 		vertexA = pointA;
 		vertexB = pointB;
@@ -88,6 +111,7 @@ public:
 	~Line(){}
 
 	void UpdateShape();
+	void Draw();
 
 public:
 
@@ -105,15 +129,11 @@ class Circle : public Shape
 {
 public:
 
-	Circle(Point* s_point, VerletIntegrator* s_integrator)
-	{
-		type = CIRCLE;
-		integrator = s_integrator;
-		point = s_point;
-	}
+	Circle(Point* s_point, VerletIntegrator* s_integrator, Application* app);
 	~Circle() {}
 
 	void UpdateShape();
+	void Draw();
 
 public:
 

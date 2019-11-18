@@ -29,6 +29,7 @@ public:
 	VerletIntegrator* integrator;
 
 	Point* selected_point;
+	ShapeType creation_type;
 
 	Point* MouseHoverSelection();
 
