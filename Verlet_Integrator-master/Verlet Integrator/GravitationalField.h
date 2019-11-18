@@ -10,7 +10,7 @@
 
 //calcula nueva po cogiendo actual sumando la velocidad por delta t (increment pos hacia ...)
 
-#define GRAVITATIONAL_CONST 6.67 //blablabla ARREGLAR ^^
+#define G 2 //6.67 //blablabla ARREGLAR, MYTODO ^^
 
 struct Point;
 class Line;
@@ -22,7 +22,7 @@ public:
 
 	float atmosphere = 0;
 	float gravity = 0;
-	float mass = 0;
+	float mass = 0; //planet radius
 	vector2 position = { 0, 0 };
 	float speed = 0;
 
@@ -33,7 +33,7 @@ class PlanetObject
 {
 public:
 
-	float speed = 0;
+	vector2 speed = { 0, 0 };
 	float mass = 0;
 	vector2 position = { 0, 0 };
 
@@ -61,7 +61,7 @@ public:
 public:
 	Planet* bigPlanet;
 	PlanetObject* smallPlanetObject;
-	vector2 Move(PlanetObject* Moon);
+	vector2 Move(Planet* Earth, PlanetObject* Moon);
 
 };
 
