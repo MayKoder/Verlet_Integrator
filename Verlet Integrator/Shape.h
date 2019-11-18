@@ -21,7 +21,7 @@ struct Point {
 
 enum ShapeType
 {
-	NO_SHAPE, LINE, CIRCLE
+	NO_SHAPE, LINE, CIRCLE, BOX
 };
 
 
@@ -98,6 +98,27 @@ public:
 	int offsetX, offsetY;
 
 	double lenght;
+
+};
+
+class Circle : public Shape
+{
+public:
+
+	Circle(Point* s_point, VerletIntegrator* s_integrator)
+	{
+		type = CIRCLE;
+		integrator = s_integrator;
+		point = s_point;
+	}
+	~Circle() {}
+
+	void UpdateShape();
+
+public:
+
+	//Point
+	Point* point;
 
 };
 

@@ -3,10 +3,20 @@
 
 #include "Module.h"
 #include"p2List_Extended.h"
+#include "Shape.h"
 
+enum ShapeType;
 struct UI_Button {
 	bool enabled = true;
 	SDL_Rect rect;
+	ShapeType type;
+	SDL_Color color;
+
+	ShapeType OnClick() 
+	{
+		return type;
+	}
+
 };
 
 
@@ -28,10 +38,18 @@ public:
 
 	bool CanBeSelected(const SDL_Rect& rect, const SDL_Rect& r);
 
+	void SetButton(UI_Button* button, SDL_Rect pos_size, bool enabled, ShapeType creation_type, SDL_Color color);
+
 public:
 
 	UI_Button menu_button;
 	UI_Button selection_screen;
+
+	//Selection buttons
+	UI_Button ball_creator;
+	UI_Button line_creator;
+	UI_Button box_creator;
+
 
 	p2List_Extended<UI_Button*> ui_elements;
 
