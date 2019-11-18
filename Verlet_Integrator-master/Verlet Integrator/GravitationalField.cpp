@@ -19,7 +19,7 @@ bool GravitationalField::Init()
 	//BIG PLANET SETTING VARS
 	bigPlanet->atmosphere = 150.f;
 	bigPlanet->gravity = 9.806f;
-	bigPlanet->mass = 100.f;
+	bigPlanet->mass = 50.f;
 	bigPlanet->position = { SCREEN_WIDTH * 0.5, SCREEN_HEIGHT * 0.5 };
 	///speed and pos = 0
 
