@@ -26,7 +26,7 @@ bool GravitationalField::Init()
 
 	//SMALL PLANET SETTING VARS
 	smallPlanetObject->mass = 10.f;
-	smallPlanetObject->position = { (SCREEN_WIDTH * 0.5) - 300, (SCREEN_HEIGHT * 0.5) - 150 };
+	smallPlanetObject->position = { (SCREEN_WIDTH * 0.5) - 100, (SCREEN_HEIGHT * 0.5) - 300 };
 	smallPlanetObject->speed = { 0.f, 0.f };
 
 	return true;
@@ -145,11 +145,17 @@ vector2 GravitationalField::Move(Planet* Earth, PlanetObject* Moon)
 	
 
 	//Speed satellite1
+	//speed1.x = Earth->speed.x + (acc1.x * TIME);
+	//speed1.y = Earth->speed.y + (acc1.y * TIME);
+	//Speed satellite2
+	//speed2.x = Moon->speed.x + ((Moon->speed.x * Moon->speed.x) / moduleR) + (acc2.x * TIME);
+	//speed2.y = Moon->speed.y + ((Moon->speed.y * Moon->speed.y) / moduleR) + (acc2.y * TIME);
+
 	speed1.x = Earth->speed.x + (acc1.x * TIME);
 	speed1.y = Earth->speed.y + (acc1.y * TIME);
-	//Speed satellite2
-	speed2.x = Moon->speed.x + (acc2.x * TIME);
-	speed2.y = Moon->speed.y + (acc2.y * TIME);
+
+	speed2.x = Moon->speed.x + (acc2.x * TIME) + speedTest.x;
+	speed2.y = Moon->speed.y + (acc2.y * TIME) + speedTest.y;
 	LOG("speed1x: %f, speed1y: %f, speed2x: %f, speed2y: %f", speed1.x, speed1.y, speed2.x, speed2.y);
 
 
@@ -159,10 +165,15 @@ vector2 GravitationalField::Move(Planet* Earth, PlanetObject* Moon)
 	angAcc2.x = (speed2.x * speed2.x) / moduleR;
 	angAcc2.y = (speed2.y * speed2.y) / moduleR;
 
-	Moon->position.x = Moon->position.x + ((speed2.x / r.x) * 1000000 * TIME) - (0.5 * acc2.x * TIME * TIME);
+	Moon->position.x = Moon->position.x + ((speed2.x / r.x) * 100000 * TIME) - (0.5 * acc2.x * TIME * TIME);
 	LOG("PositionX: %f", Moon->position.x);
-	Moon->position.y = Moon->position.y + ((speed2.y / r.y) * 1000000 * TIME) - (0.5 * acc2.y * TIME * TIME);
+	Moon->position.y = Moon->position.y + ((speed2.y / r.y) * 100000 * TIME) - (0.5 * acc2.y * TIME * TIME);
 	LOG("PositionY: %f", Moon->position.y);
+
+	Earth->position.x = Earth->position.x + ((speed1.x / r.x) * 100000 * TIME) - (0.5 * acc1.x * TIME * TIME);
+	LOG("PositionX: %f", Earth->position.x);
+	Earth->position.y = Earth->position.y + ((speed1.y / r.y) * 100000 * TIME) - (0.5 * acc1.y * TIME * TIME);
+	LOG("PositionY: %f", Earth->position.y);
 
 	return Moon->position;
 }

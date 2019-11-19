@@ -11,7 +11,7 @@
 //calcula nueva po cogiendo actual sumando la velocidad por delta t (increment pos hacia ...)
 
 #define G -6.67 //6.67 //blablabla ARREGLAR, MYTODO ^^
-#define TIME 0.2
+#define TIME 0.8
 
 struct Point;
 class Line;
@@ -63,6 +63,7 @@ public:
 public:
 	Planet* bigPlanet;
 	PlanetObject* smallPlanetObject;
+
 	float Fg = 0;
 	vector2 r;
 	float moduleR;
@@ -70,6 +71,11 @@ public:
 	vector2 acc1, acc2;
 	vector2 speed1, speed2;
 	vector2 angAcc1, angAcc2;
+
+	bool changeSign = false;
+	vector2 origin = { SCREEN_HEIGHT * 0.5, SCREEN_WIDTH * 0.5 };
+
+	vector2 speedTest = { 0.01f, 0.f };
 
 };
 
