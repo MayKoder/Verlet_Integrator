@@ -96,26 +96,10 @@ update_status ModuleVerlet::Update()
 
 		//int x = App->input->GetMouseX() - p.old_x;
 		//int y = App->input->GetMouseY() - p.old_y;		
-		int x = App->input->GetMouseX() - (int)selected_point->x;
-		int y = App->input->GetMouseY() - (int)selected_point->y;
+		float x = (float)App->input->GetMouseX() - selected_point->x;
+		float y = (float)App->input->GetMouseY() - selected_point->y;
 
-		if (App->input->GetMouseY() < selected_point->y)
-		{
-			selected_point->vy += y * 3;
-		}
-		else
-		{
-			selected_point->vy += y * 3;
-		}
-
-		if (App->input->GetMouseX() < selected_point->x)
-		{
-			selected_point->vx += x * 3;
-		}
-		else
-		{
-			selected_point->vx += x * 3;
-		}
+		integrator->AddForce(selected_point, {x * 3, y * 3});
 
 		selected_point = nullptr;
 
@@ -132,7 +116,7 @@ update_status ModuleVerlet::Update()
 		App->renderer->DrawCircle((int)tmp_point->x, (int)tmp_point->y, tmp_point->radius, 255, 255, 255, 255);
 		tmp_point->selector_rect.x = (int)tmp_point->x - tmp_point->selector_rect.w / 2;
 		tmp_point->selector_rect.y = (int)tmp_point->y - tmp_point->selector_rect.h / 2;
-		App->renderer->DrawQuad({ (int)tmp_point->selector_rect.x, (int)tmp_point->selector_rect.y, 20, 20}, 0, 0, 255, 50);
+		App->renderer->DrawQuad({ (int)tmp_point->selector_rect.x, (int)tmp_point->selector_rect.y, 20, 20}, (int)tmp_point->color.r, (int)tmp_point->color.g, (int)tmp_point->color.b, (int)tmp_point->color.a);
 	}
 	for (unsigned int i = 0; i < shapes.count(); i++)
 	{

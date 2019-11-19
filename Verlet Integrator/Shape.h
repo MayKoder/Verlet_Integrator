@@ -16,24 +16,10 @@ struct Point {
 	float vx;
 	float vy;
 	int radius = 10;
+	SDL_Color color;
 
 	//This needs to be converted to a real dt
 	float dt;
-
-	/*
-	float mass;
-	float newVX;
-	float newVY;
-	float currentVX;
-	float currentVY;
-	float sum_forcesX;
-	float sum_forcesY;
-	float acc_x;
-	float acc_y;
-
-	currentX = 
-
-	*/
 
 	SDL_Rect selector_rect;
 };
