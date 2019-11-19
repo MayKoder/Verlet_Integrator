@@ -19,11 +19,9 @@ bool ModuleUI::Init()
 
 	SetButton(&menu_button, { SCREEN_WIDTH - 40, 20, 20, 20 }, true, ShapeType::NO_SHAPE, {0, 255, 255, 100});
 	SetButton(&selection_screen, { SCREEN_WIDTH - 200, 0, 200, SCREEN_HEIGHT }, false, ShapeType::NO_SHAPE, {0, 255, 255, 100});
-	SetButton(&ball_creator, { SCREEN_WIDTH - 167, 30, 140, 140 }, false, ShapeType::CIRCLE, {0, 0, 255, 100});
-	SetButton(&line_creator, { SCREEN_WIDTH - 167, 200, 140, 140 }, false, ShapeType::LINE, {0, 0, 255, 100});
-	SetButton(&box_creator, { SCREEN_WIDTH - 167, 370, 140, 140 }, false, ShapeType::BOX, {0, 0, 255, 100});
-
-
+	SetButton(&selectors[0], { SCREEN_WIDTH - 167, 30, 140, 140 }, false, ShapeType::CIRCLE, {0, 0, 255, 100});
+	SetButton(&selectors[1], { SCREEN_WIDTH - 167, 200, 140, 140 }, false, ShapeType::LINE, {0, 0, 255, 100});
+	SetButton(&selectors[2], { SCREEN_WIDTH - 167, 370, 140, 140 }, false, ShapeType::BOX, {0, 0, 255, 100});
 
 	return ret;
 }
@@ -36,16 +34,20 @@ update_status ModuleUI::Update()
 		if (CanBeSelected({ App->input->GetMouseX(), App->input->GetMouseY(), 0, 0 }, menu_button.rect)
 			|| (menu_button.enabled == false && !CanBeSelected({ App->input->GetMouseX(), App->input->GetMouseY(), 0, 0 }, selection_screen.rect)))
 		{
-			//menu_button.enabled = !menu_button.enabled;
-			//selection_screen.enabled = !selection_screen.enabled;
-
 			for (unsigned int i = 0; i < ui_elements.count(); i++)
 			{
 				ui_elements[i]->enabled = !ui_elements[i]->enabled;
 			}
-
-
 		}
+
+		for (int i = 0; i < 3; i++)
+		{
+			if (selectors[i].enabled && CanBeSelected({ App->input->GetMouseX(), App->input->GetMouseY(), 0, 0 }, selectors[i].rect)) 
+			{
+				App->verlet->creation_type = selectors[i].OnClick();
+			}
+		}
+
 	}
 
 

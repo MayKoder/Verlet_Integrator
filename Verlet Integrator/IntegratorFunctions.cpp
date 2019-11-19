@@ -20,14 +20,6 @@ void VerletIntegrator::InitPoint(Point* p, vector2 pos)
 	p->dt = (1.f/ 60.f);
 
 	p->selector_rect = { (int)pos.x, (int)pos.y, p->radius * 2, p->radius * 2};
-
-
-
-
-
-
-
-
 	//point.add(p);
 }
 

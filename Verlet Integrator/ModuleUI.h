@@ -46,9 +46,7 @@ public:
 	UI_Button selection_screen;
 
 	//Selection buttons
-	UI_Button ball_creator;
-	UI_Button line_creator;
-	UI_Button box_creator;
+	UI_Button selectors[3];
 
 
 	p2List_Extended<UI_Button*> ui_elements;
