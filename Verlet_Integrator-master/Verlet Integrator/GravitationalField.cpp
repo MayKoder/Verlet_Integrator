@@ -26,7 +26,7 @@ bool GravitationalField::Init()
 
 	//SMALL PLANET SETTING VARS
 	smallPlanetObject->mass = 10.f;
-	smallPlanetObject->position = { (SCREEN_WIDTH * 0.5) + 200, (SCREEN_HEIGHT * 0.5) + 1};
+	smallPlanetObject->position = { (SCREEN_WIDTH * 0.5) + 200, (SCREEN_HEIGHT * 0.5) + 20};
 	smallPlanetObject->speed = { 0.f, 0.f };
 
 	return true;
