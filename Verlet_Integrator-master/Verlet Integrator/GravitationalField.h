@@ -11,7 +11,7 @@
 //calcula nueva po cogiendo actual sumando la velocidad por delta t (increment pos hacia ...)
 
 #define G -6.67 //6.67 //blablabla ARREGLAR, MYTODO ^^
-#define TIME 8
+#define TIME 1
 
 struct Point;
 class Line;
@@ -72,7 +72,10 @@ public:
 	vector2 speed1, speed2;
 	vector2 angAcc1, angAcc2;
 
-	bool changeSign = false;
+	vector2 insideAtm = { 0, 0 };
+	float moduleAtm = 0;
+
+	bool leftSide = false;
 	vector2 origin = { SCREEN_HEIGHT * 0.5, SCREEN_WIDTH * 0.5 };
 
 	vector2 speedTest = { 0.01f, 0.f };

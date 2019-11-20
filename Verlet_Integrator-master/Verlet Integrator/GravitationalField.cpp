@@ -26,7 +26,7 @@ bool GravitationalField::Init()
 
 	//SMALL PLANET SETTING VARS
 	smallPlanetObject->mass = 10.f;
-	smallPlanetObject->position = { (SCREEN_WIDTH * 0.5) + 200, (SCREEN_HEIGHT * 0.5) - 1};
+	smallPlanetObject->position = { (SCREEN_WIDTH * 0.5) + 200, (SCREEN_HEIGHT * 0.5) + 1};
 	smallPlanetObject->speed = { 0.f, 0.f };
 
 	return true;
@@ -89,13 +89,6 @@ void GravitationalField::DrawSmallPlanet(PlanetObject* Moon)
 
 vector2 GravitationalField::Move(Planet* Earth, PlanetObject* Moon)
 {
-	/*float distance = Earth->position.x - Moon->position.x;
-	float h = (Earth->position.y) - Moon->position.y;
-
-	Moon->position.x = Moon->position.x + (speed.x * TIME) - (0.5 * (acceleration.x - distance) * TIME * TIME);
-	Moon->position.y = Moon->position.y + (speed.y * TIME) - (0.5 * (acceleration.y - h) * TIME * TIME);
-	*/
-
 	//Calculing Fg
 	r.x = Moon->position.x - Earth->position.x;
 	LOG("R.X: %f", r.x);
@@ -108,22 +101,62 @@ vector2 GravitationalField::Move(Planet* Earth, PlanetObject* Moon)
 	Fg = (G * Earth->mass * Moon->mass) / (moduleR * moduleR);
 	LOG("Fg: %f", Fg);
 
+	// -------------------------------
 
-	//Little planet touches Big Planet Surface
-	if (Moon->position.x < Earth->position.x + Earth->mass + Moon->mass)
+	//	1/4 orbit
+
+	if (Moon->position.x <= SCREEN_WIDTH * 0.5)
 	{
 		Fg = 0;
 		speed1 = { 0, 0 };
 		speed2 = { 0, 0 };
 		acc1 = { 0, 0 };
 		acc2 = { 0, 0 };
+		Moon->position.x = SCREEN_WIDTH * 0.5;
+
+		return Moon->position;
 	}
 
-	//---------------------
+	// -------------------------------
+
+	//Little planet touches Big Planet Surface
+	insideAtm.x = Earth->position.x + Earth->mass + Moon->mass;
+	insideAtm.y = Earth->position.y + Earth->mass + Moon->mass;
+
+	moduleAtm = SDL_sqrt((insideAtm.x * insideAtm.x) + (insideAtm.y * insideAtm.y));
+
+		//if little planet is at the right of the big planet
+	if (Moon->position.x < insideAtm.x && leftSide == false)
+	{
+		if (leftSide == false)
+		{
+			Fg = 0;
+			speed1 = { 0, 0 };
+			speed2 = { 0, 0 };
+			acc1 = { 0, 0 };
+			acc2 = { 0, 0 };
+		}
+	}
+
+		//if little planet is at the left of the big planet
+	if (Moon->position.x < Earth->position.x - Earth->mass)
+	{
+		leftSide = true;
+		insideAtm.x = Earth->position.x - Earth->mass - Moon->mass;
+		//insideAtm.y = Earth->position.y + Earth->mass + Moon->mass;
+		if (Moon->position.x > insideAtm.x)
+		{
+			Fg = 0;
+			speed1 = { 0, 0 };
+			speed2 = { 0, 0 };
+			acc1 = { 0, 0 };
+			acc2 = { 0, 0 };
+		}
+	}
+
+	// -------------------------------
 
 	//Apllying Fg
-
-	
 
 	//Fg apllied to satellite1
 	Fg1.x = Fg * ((Moon->position.x - Earth->position.x) / moduleR);
@@ -134,11 +167,9 @@ vector2 GravitationalField::Move(Planet* Earth, PlanetObject* Moon)
 
 	LOG("Fg1x: %f, Fg1y: %f, Fg2x: %f, Fg2y: %f", Fg1.x, Fg1.y, Fg2.x, Fg2.y);
 
-	//---------------------
+	// -------------------------------
 
 	//Calculing Accelerations (Newton's 2nd Law)
-
-	
 
 	//Acceleration satellite1
 	acc1.x = (1.f / Earth->mass) * Fg1.x;
@@ -160,22 +191,30 @@ vector2 GravitationalField::Move(Planet* Earth, PlanetObject* Moon)
 	//speed2.x = Moon->speed.x + ((Moon->speed.x * Moon->speed.x) / moduleR) + (acc2.x * TIME);
 	//speed2.y = Moon->speed.y + ((Moon->speed.y * Moon->speed.y) / moduleR) + (acc2.y * TIME);
 
-	speed1.x = Earth->speed.x + (acc1.x * TIME);
-	speed1.y = Earth->speed.y + (acc1.y * TIME);
+	//------------------
 
-	speed2.x = Moon->speed.x;
-	speed2.y = Moon->speed.y;
+	//ACTUAL
+	//speed1.x = Earth->speed.x + (acc1.x * TIME);
+	//speed1.y = Earth->speed.y + (acc1.y * TIME);
+
+	//speed2.x = Moon->speed.x;
+	//speed2.y = Moon->speed.y;
+
+	//------------------
+
+	speed1.x = SDL_sqrt((-G * Earth->mass) / moduleR);
+	speed1.y = SDL_sqrt((-G * Earth->mass) / moduleR);
+
+	speed2.x = SDL_sqrt((-G * Earth->mass) / moduleR);
+	speed2.y = SDL_sqrt((-G * Earth->mass) / moduleR);
+
 	LOG("speed1x: %f, speed1y: %f, speed2x: %f, speed2y: %f", speed1.x, speed1.y, speed2.x, speed2.y);
 
-	angAcc1.x = (speed1.x * speed1.x) / moduleR;
-	angAcc1.y = (speed1.y * speed1.y) / moduleR;
 
-	angAcc2.x = (speed2.x * speed2.x) / moduleR;
-	angAcc2.y = (speed2.y * speed2.y) / moduleR;
 
-	Moon->position.x = Moon->position.x + ((speed2.x / r.x) * 100000 * TIME) - (0.5 * acc2.x * TIME * TIME);
+	Moon->position.x = Moon->position.x + ((-speed2.x / r.x) * 100 * TIME) - (0.5 * acc2.x * TIME * TIME);
 	LOG("PositionX: %f", Moon->position.x);
-	Moon->position.y = Moon->position.y + ((speed2.y / r.y) * 100000 * TIME) - (0.5 * acc2.y * TIME * TIME);
+	Moon->position.y = Moon->position.y + ((speed2.y / r.y) * 100 * TIME) - (0.5 * acc2.y * TIME * TIME);
 	LOG("PositionY: %f", Moon->position.y);
 
 	//Earth->position.x = Earth->position.x + ((speed1.x / r.x) * 100000 * TIME) - (0.5 * acc1.x * TIME * TIME);
