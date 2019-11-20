@@ -22,7 +22,7 @@ class ModuleFonts : public Module
 public:
 	Font	 fonts[MAX_FONTS];
 	ModuleFonts(Application* app, bool start_enabled = true);
-	~ModuleFonts();
+	virtual ~ModuleFonts();
 
 	// Load Font
 	int Load(const char* texture_path, const char* characters, uint rows, uint h, uint w, uint rc);

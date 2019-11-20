@@ -12,7 +12,9 @@
 #include"ModuleVerlet.h"
 #include"ModuleUI.h"
 #include "ModuleFonts.h"
+#include "ModuleDebug.h"
 
+class ModuleDebug;
 class ModuleVerlet;
 class Application
 {
@@ -25,6 +27,7 @@ public:
 	ModuleVerlet* verlet;
 	ModuleUI* UI;
 	ModuleFonts* fonts;
+	ModuleDebug* debug;
 
 private:
 
