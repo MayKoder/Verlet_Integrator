@@ -26,7 +26,7 @@ bool GravitationalField::Init()
 
 	//SMALL PLANET SETTING VARS
 	smallPlanetObject->mass = 10.f;
-	smallPlanetObject->position = { (SCREEN_WIDTH * 0.5) + 200, (SCREEN_HEIGHT * 0.5) + 20};
+	smallPlanetObject->position = { (SCREEN_WIDTH * 0.5) + 200, (SCREEN_HEIGHT * 0.5) + 10};
 	smallPlanetObject->speed = { 0.f, 0.f };
 
 	return true;
@@ -79,12 +79,12 @@ bool GravitationalField::CleanUp()
 void GravitationalField::DrawBigPlanet(Planet* Earth)
 {	
 	App->renderer->DrawCircle(Earth->position.x, Earth->position.y, Earth->mass, 255, 255, 255, 255);
-	App->renderer->DrawCircle(Earth->position.x, Earth->position.y, Earth->atmosphere, 255, 255, 255, 255);
+	App->renderer->DrawCircle(Earth->position.x, Earth->position.y, Earth->atmosphere, 0, 0, 255, 255);
 }
 
 void GravitationalField::DrawSmallPlanet(PlanetObject* Moon)
 {
-	App->renderer->DrawCircle(Moon->position.x, Moon->position.y, Moon->mass, 255, 255, 255, 255);
+	App->renderer->DrawCircle(Moon->position.x, Moon->position.y, Moon->mass, 0, 255, 255, 255);
 }
 
 vector2 GravitationalField::Move(Planet* Earth, PlanetObject* Moon)
