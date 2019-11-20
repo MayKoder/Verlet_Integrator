@@ -138,7 +138,7 @@ void VerletIntegrator::updatePoints(Point* p)
 	p->vx = p->vx + (0.f * p->dt);
 	p->vy = p->vy + (gravity * p->dt);
 
-	LOG("%f, %f", incrementX, incrementY);
+	//LOG("%f, %f", incrementX, incrementY);
 
 
 }

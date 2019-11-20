@@ -73,7 +73,7 @@ void Line::UpdateShape()
 }
 void Line::Draw() 
 {
-	App->renderer->DrawLine((int)vertexA->old_x, (int)vertexA->old_y, (int)vertexB->old_x, (int)vertexB->old_y, 0, 255, 0, 255);
+	App->renderer->DrawLine((int)vertexA->x, (int)vertexA->y, (int)vertexB->x, (int)vertexB->y, 0, 255, 0, 255);
 }
 
 void Circle::UpdateShape()
