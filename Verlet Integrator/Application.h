@@ -11,6 +11,7 @@
 #include "ModuleAudio.h"
 #include"ModuleVerlet.h"
 #include"ModuleUI.h"
+#include "ModuleFonts.h"
 
 class ModuleVerlet;
 class Application
@@ -23,6 +24,7 @@ public:
 	ModuleAudio* audio;
 	ModuleVerlet* verlet;
 	ModuleUI* UI;
+	ModuleFonts* fonts;
 
 private:
 
