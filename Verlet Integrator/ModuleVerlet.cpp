@@ -124,6 +124,39 @@ update_status ModuleVerlet::Update()
 		tmp->Draw();
 	}
 
+	//Draw particle debug info
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN) 
+	{
+		if (debugPointNumber + 1 >= (int)world_points.count()) 
+		{
+			if ((int)world_points.count() == 0)
+				debugPointNumber = -1;
+			else
+				debugPointNumber = 0;
+		}
+		else
+		{
+			debugPointNumber++;
+		}
+	}
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN)
+	{
+		if (debugPointNumber - 1 >= 0)
+		{
+			if ((int)world_points.count() == 0)
+				debugPointNumber = -1;
+			else
+				debugPointNumber--;
+		}
+		else
+		{
+			debugPointNumber = (int)world_points.count() - 1;
+		}
+	}
+	if (debugPointNumber >= 0) 
+	{
+		//Draw debug info
+	}
 
 	return UPDATE_CONTINUE;
 }
@@ -132,7 +165,7 @@ update_status ModuleVerlet::Update()
 update_status ModuleVerlet::PostUpdate()
 {
 
-
+	
 
 
 	return UPDATE_CONTINUE;

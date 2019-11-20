@@ -29,6 +29,9 @@ public:
 	p2List_Extended<Point*> world_points;
 	VerletIntegrator* integrator;
 
+	int debugPointNumber = -1;
+
+
 	Point* selected_point;
 	ShapeType creation_type;
 
