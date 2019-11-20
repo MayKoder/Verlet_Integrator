@@ -7,6 +7,12 @@
 
 class ModuleDebug :public Module {
 
+public:
+	ModuleDebug(Application* app, bool start_enabled = true);
+	~ModuleDebug();
+	bool Awake();
+	bool Start();
+	update_status Update();
 };
 
 #endif

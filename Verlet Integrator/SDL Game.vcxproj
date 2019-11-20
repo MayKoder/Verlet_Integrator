@@ -74,6 +74,7 @@
     <ClInclude Include="Globals.h" />
     <ClInclude Include="IntegratorFunctions.h" />
     <ClInclude Include="MemLeaks.h" />
+    <ClInclude Include="ModuleDebug.h" />
     <ClInclude Include="ModuleFonts.h" />
     <ClInclude Include="ModuleUI.h" />
     <ClInclude Include="ModuleVerlet.h" />
@@ -96,6 +97,7 @@
     <ClCompile Include="log.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="ModuleAudio.cpp" />
+    <ClCompile Include="ModuleDebug.cpp" />
     <ClCompile Include="ModuleFonts.cpp" />
     <ClCompile Include="ModuleInput.cpp" />
     <ClCompile Include="ModuleRender.cpp" />
