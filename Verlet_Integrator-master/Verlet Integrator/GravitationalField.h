@@ -65,16 +65,18 @@ public:
 	PlanetObject* smallPlanetObject;
 
 	float Fg = 0;
-	vector2 r;
-	float moduleR;
-	vector2 Fg1, Fg2;
-	vector2 acc1, acc2;
-	vector2 speed1, speed2;
-	vector2 angAcc1, angAcc2;
+	float Fc = 30;
+	vector2 r = { 0, 0 };
+	float moduleR = 0;
+	vector2 Fg1, Fg2 = { 0, 0 };
+	vector2 acc1, acc2 = { 0, 0 };
+	vector2 speed1, speed2 = { 0, 0 };
+	vector2 angAcc1, angAcc2 = { 0, 0 };
 
 	vector2 insideAtm = { 0, 0 };
 	float moduleAtm = 0;
 
+	bool changeSign = false;
 	bool leftSide = false;
 	vector2 origin = { SCREEN_HEIGHT * 0.5, SCREEN_WIDTH * 0.5 };
 

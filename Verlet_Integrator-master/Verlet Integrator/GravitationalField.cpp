@@ -26,7 +26,7 @@ bool GravitationalField::Init()
 
 	//SMALL PLANET SETTING VARS
 	smallPlanetObject->mass = 10.f;
-	smallPlanetObject->position = { (SCREEN_WIDTH * 0.5) + 200, (SCREEN_HEIGHT * 0.5) - 10};
+	smallPlanetObject->position = { (SCREEN_WIDTH * 0.5) + 200, (SCREEN_HEIGHT * 0.5) - 50};
 	smallPlanetObject->speed = { 0.f, 0.f };
 
 	return true;
@@ -97,21 +97,30 @@ vector2 GravitationalField::Move(Planet* Earth, PlanetObject* Moon)
 	Fg = (G * Earth->mass * Moon->mass) / (moduleR * moduleR);
 	LOG("Fg: %f", Fg);
 
+	//Uncomment this code to "set" a centripetal force in the oposite direction of Fg.
+	//That will variate the little's planet orbit (it'll be not a perfect orbit around the big planet).
+
+	Fg = Fg - Fc;
+
 	// -------------------------------
 
 	//	1/4 orbit
 
-	if (Moon->position.x <= SCREEN_WIDTH * 0.5)
+	/*if (Moon->position.x <= SCREEN_WIDTH * 0.5)
 	{
-		Fg = 0;
-		speed1 = { 0, 0 };
-		speed2 = { 0, 0 };
-		acc1 = { 0, 0 };
-		acc2 = { 0, 0 };
-		Moon->position.x = SCREEN_WIDTH * 0.5;
+		Fg = Fg * (-1);
+		speed1.x = speed1.x * (-1);
+		speed1.y = speed1.y * (-1);
+		speed2.x = speed2.x * (-1);
+		speed2.y = speed2.y * (-1);
+		acc1.x = acc1.x * (-1);
+		acc1.y = acc1.y * (-1);
+		acc2.x = acc2.x * (-1);
+		acc2.y = acc2.y * (-1);
+		//Moon->position.x = SCREEN_WIDTH * 0.5;
 
 		return Moon->position;
-	}
+	}*/
 
 	// -------------------------------
 
@@ -122,7 +131,7 @@ vector2 GravitationalField::Move(Planet* Earth, PlanetObject* Moon)
 	moduleAtm = SDL_sqrt((insideAtm.x * insideAtm.x) + (insideAtm.y * insideAtm.y));
 
 		//if little planet is at the right of the big planet surface
-	if (Moon->position.x < insideAtm.x && leftSide == false)
+	/*if (Moon->position.x < insideAtm.x && leftSide == false)
 	{
 		if (leftSide == false)
 		{
@@ -148,7 +157,7 @@ vector2 GravitationalField::Move(Planet* Earth, PlanetObject* Moon)
 			acc1 = { 0, 0 };
 			acc2 = { 0, 0 };
 		}
-	}
+	}*/
 
 	// -------------------------------
 
@@ -190,6 +199,24 @@ vector2 GravitationalField::Move(Planet* Earth, PlanetObject* Moon)
 	//------------------------
 
 	//Calculing final position
+
+	if (Moon->position.x <= SCREEN_WIDTH * 0.5 && changeSign == false)
+	{
+		LOG("PositionX: %f, PositionY: %f, Speed2.x: %f, Speed2.y: %f, R.X: %f, R.Y: %f", Moon->position.x, Moon->position.y, speed2.x, speed2.y, r.x, r.y);
+		speed2.x = speed2.x * (-1);
+		speed2.y = speed2.y * (-1);
+		acc2.x = acc2.x * (-1);
+		acc2.y = acc2.y * (-1);
+	}
+
+	if (Moon->position.y >= SCREEN_HEIGHT * 0.5 && changeSign == false)
+	{
+		LOG("PositionX: %f, PositionY: %f, Speed2.x: %f, Speed2.y: %f, R.X: %f, R.Y: %f", Moon->position.x, Moon->position.y, speed2.x, speed2.y, r.x, r.y);
+		speed2.x = speed2.x * (-1);
+		speed2.y = speed2.y * (-1);
+		acc2.x = acc2.x * (-1);
+		acc2.y = acc2.y * (-1);
+	}
 
 	Moon->position.x = Moon->position.x + ((-speed2.x / r.x) * 100 * TIME) - (0.5 * acc2.x * TIME * TIME);
 	LOG("PositionX: %f", Moon->position.x);
