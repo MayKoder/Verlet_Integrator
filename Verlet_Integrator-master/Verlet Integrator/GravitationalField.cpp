@@ -26,7 +26,7 @@ bool GravitationalField::Init()
 
 	//SMALL PLANET SETTING VARS
 	smallPlanetObject->mass = 10.f;
-	smallPlanetObject->position = { (SCREEN_WIDTH * 0.5) + 200, (SCREEN_HEIGHT * 0.5) + 10};
+	smallPlanetObject->position = { (SCREEN_WIDTH * 0.5) + 200, (SCREEN_HEIGHT * 0.5) - 10};
 	smallPlanetObject->speed = { 0.f, 0.f };
 
 	return true;
@@ -35,7 +35,6 @@ bool GravitationalField::Init()
 //PreUpdate:
 update_status GravitationalField::PreUpdate()
 {
-
 	return UPDATE_CONTINUE;
 }
 
@@ -51,7 +50,6 @@ update_status GravitationalField::Update()
 	{
 		DrawSmallPlanet(smallPlanetObject);
 		Move(bigPlanet, smallPlanetObject);
-		//set speed and then update the smallPlanet position: VERLET THKS :D
 	}
 
 	return UPDATE_CONTINUE;
@@ -72,9 +70,7 @@ bool GravitationalField::CleanUp()
 	return true;
 }
 
-
-//----------------------------
-
+// -------------------------------
 
 void GravitationalField::DrawBigPlanet(Planet* Earth)
 {	
@@ -125,7 +121,7 @@ vector2 GravitationalField::Move(Planet* Earth, PlanetObject* Moon)
 
 	moduleAtm = SDL_sqrt((insideAtm.x * insideAtm.x) + (insideAtm.y * insideAtm.y));
 
-		//if little planet is at the right of the big planet
+		//if little planet is at the right of the big planet surface
 	if (Moon->position.x < insideAtm.x && leftSide == false)
 	{
 		if (leftSide == false)
@@ -138,7 +134,7 @@ vector2 GravitationalField::Move(Planet* Earth, PlanetObject* Moon)
 		}
 	}
 
-		//if little planet is at the left of the big planet
+		//if little planet is at the left of the big planet surface
 	if (Moon->position.x < Earth->position.x - Earth->mass)
 	{
 		leftSide = true;
@@ -182,25 +178,6 @@ vector2 GravitationalField::Move(Planet* Earth, PlanetObject* Moon)
 	//------------------------
 
 	//Calculing Speeds
-	
-
-	//Speed satellite1
-	//speed1.x = Earth->speed.x + (acc1.x * TIME);
-	//speed1.y = Earth->speed.y + (acc1.y * TIME);
-	//Speed satellite2
-	//speed2.x = Moon->speed.x + ((Moon->speed.x * Moon->speed.x) / moduleR) + (acc2.x * TIME);
-	//speed2.y = Moon->speed.y + ((Moon->speed.y * Moon->speed.y) / moduleR) + (acc2.y * TIME);
-
-	//------------------
-
-	//ACTUAL
-	//speed1.x = Earth->speed.x + (acc1.x * TIME);
-	//speed1.y = Earth->speed.y + (acc1.y * TIME);
-
-	//speed2.x = Moon->speed.x;
-	//speed2.y = Moon->speed.y;
-
-	//------------------
 
 	speed1.x = SDL_sqrt((-G * Earth->mass) / moduleR);
 	speed1.y = SDL_sqrt((-G * Earth->mass) / moduleR);
@@ -210,7 +187,9 @@ vector2 GravitationalField::Move(Planet* Earth, PlanetObject* Moon)
 
 	LOG("speed1x: %f, speed1y: %f, speed2x: %f, speed2y: %f", speed1.x, speed1.y, speed2.x, speed2.y);
 
+	//------------------------
 
+	//Calculing final position
 
 	Moon->position.x = Moon->position.x + ((-speed2.x / r.x) * 100 * TIME) - (0.5 * acc2.x * TIME * TIME);
 	LOG("PositionX: %f", Moon->position.x);
@@ -221,6 +200,9 @@ vector2 GravitationalField::Move(Planet* Earth, PlanetObject* Moon)
 	//LOG("PositionX: %f", Earth->position.x);
 	//Earth->position.y = Earth->position.y + ((speed1.y / r.y) * 100000 * TIME) - (0.5 * acc1.y * TIME * TIME);
 	//LOG("PositionY: %f", Earth->position.y);
+
+	//Cheking if it's a perfect orbit if little planet has no speed:
+	LOG("moduleR: %f", moduleR);
 
 	return Moon->position;
 }
