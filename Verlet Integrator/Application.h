@@ -13,6 +13,7 @@
 #include"ModuleUI.h"
 #include "ModuleFonts.h"
 #include "ModuleDebug.h"
+#include "GravitationalField.h"
 
 class ModuleDebug;
 class ModuleVerlet;
@@ -28,6 +29,7 @@ public:
 	ModuleUI* UI;
 	ModuleFonts* fonts;
 	ModuleDebug* debug;
+	GravitationalField* gravitationalField;
 
 private:
 

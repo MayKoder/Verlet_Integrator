@@ -63,6 +63,16 @@ update_status ModuleVerlet::Update()
 
 	}
 
+	if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
+	{
+		bigPlanetEnabled = true;
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
+	{
+		smallPlanetEnabled = true;
+	}
+
 
 	if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN) 
 	{

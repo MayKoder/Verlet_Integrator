@@ -11,6 +11,7 @@ Application::Application()
 	UI = new ModuleUI(this, true);
 	fonts = new ModuleFonts(this);
 	debug = new ModuleDebug(this);
+	gravitationalField = new GravitationalField(this);
 
 	// The order of calls is very important!
 	// Modules will Init() Start() and Update in this order
@@ -22,6 +23,7 @@ Application::Application()
 	AddModule(textures);
 	AddModule(input);
 	AddModule(audio);
+	AddModule(gravitationalField);
 	AddModule(verlet);
 	AddModule(UI);
 	AddModule(fonts);
