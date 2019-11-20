@@ -135,8 +135,18 @@ void VerletIntegrator::updatePoints(Point* p)
 	}
 
 	//Velocity update for the next frame (and next position calculation)
-	p->vx = p->vx + (0.f * p->dt);
-	p->vy = p->vy + (gravity * p->dt);
+	if (p->vx > 0) 
+	{
+		p->vx = p->vx + (-friction * p->dt);
+	}
+	else if(p->vx < 0)
+	{
+		p->vx = p->vx + (friction * p->dt);
+	}
+	if (p->vx == 0) {
+		p->vx = p->vx + (0.f * p->dt);
+	}
+		p->vy = p->vy + (gravity * p->dt);
 
 	//LOG("%f, %f", incrementX, incrementY);
 

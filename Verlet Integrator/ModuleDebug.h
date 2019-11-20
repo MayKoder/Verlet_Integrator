@@ -15,6 +15,8 @@ public:
 	bool Awake();
 	bool Start();
 	update_status Update();
+
+	int debugPointNumber = -1;
 };
 
 
