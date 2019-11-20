@@ -100,7 +100,7 @@ vector2 GravitationalField::Move(Planet* Earth, PlanetObject* Moon)
 	//Uncomment this code to "set" a centripetal force in the oposite direction of Fg.
 	//That will variate the little's planet orbit (it'll be not a perfect orbit around the big planet).
 
-	Fg = Fg - Fc;
+	//Fg = Fg - Fc;
 
 	// -------------------------------
 
@@ -131,7 +131,7 @@ vector2 GravitationalField::Move(Planet* Earth, PlanetObject* Moon)
 	moduleAtm = SDL_sqrt((insideAtm.x * insideAtm.x) + (insideAtm.y * insideAtm.y));
 
 		//if little planet is at the right of the big planet surface
-	/*if (Moon->position.x < insideAtm.x && leftSide == false)
+	if (Moon->position.x < insideAtm.x && leftSide == false)
 	{
 		if (leftSide == false)
 		{
@@ -157,7 +157,7 @@ vector2 GravitationalField::Move(Planet* Earth, PlanetObject* Moon)
 			acc1 = { 0, 0 };
 			acc2 = { 0, 0 };
 		}
-	}*/
+	}
 
 	// -------------------------------
 
