@@ -30,9 +30,9 @@ bool ModuleDebug::Start()
 
 update_status ModuleDebug::Update()
 {
-	App->fonts->BlitText(App->renderer->camera.x+20, App->renderer->camera.y+10,1, "Position:");
-	App->fonts->BlitText(App->renderer->camera.x+20, App->renderer->camera.y+60,1, "Velocity:");
-	App->fonts->BlitText(App->renderer->camera.x+20, App->renderer->camera.y+110,1, "Acceleration:");
+	App->fonts->BlitText(App->renderer->camera.x+20, App->renderer->camera.y+10,1, "Position");
+	App->fonts->BlitText(App->renderer->camera.x+20, App->renderer->camera.y+60,1, "Velocity");
+	App->fonts->BlitText(App->renderer->camera.x+20, App->renderer->camera.y+110,1, "Acceleration");
 	return update_status::UPDATE_CONTINUE;
 }
 
