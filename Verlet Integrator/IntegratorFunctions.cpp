@@ -88,24 +88,7 @@ void VerletIntegrator::updatePoints()
 			{
 				if (pow((check_Point->x - p->x), 2) + pow((p->y - check_Point->y), 2) <= pow((p->radius + check_Point->radius), 2))
 				{
-					p->vx *= -1 * bounce;
-					p->vy *= -1 * bounce;
-
-					//Ball collision correction
-					float fDistance = sqrtf((check_Point->x - p->x)*(check_Point->x - p->x) + (check_Point->y - p->y)*(check_Point->y - p->y));
-					float fOverlap = 0.5f * (fDistance - check_Point->radius - p->radius);
-
-					//Move objects outside collision
-					check_Point->x -= fOverlap * (check_Point->x - p->x) / fDistance;
-					check_Point->y -= fOverlap * (check_Point->y - p->y) / fDistance;
-					p->x += fOverlap * (check_Point->x - p->x) / fDistance;
-					p->y += fOverlap * (check_Point->y - p->y) / fDistance;
-
-					//Invert velocity to simulate elastic collision
-					check_Point->vx = p->vx;
-					check_Point->vx *= -1 * bounce;
-					check_Point->vy = p->vy;
-					check_Point->vy *= -1 * bounce;
+					OnCollision(p, check_Point);
 				}
 			}
 		}
@@ -137,8 +120,25 @@ void VerletIntegrator::updatePoints()
 
 }
 
-//void VerletIntegrator::OnCollision(vector2 point, Point* p) 
-//{
-//
-//}
+void VerletIntegrator::OnCollision(Point* p, Point* check_Point)
+{
+	p->vx *= -1 * bounce;
+	p->vy *= -1 * bounce;
+
+	//Ball collision correction
+	float fDistance = sqrtf((check_Point->x - p->x)*(check_Point->x - p->x) + (check_Point->y - p->y)*(check_Point->y - p->y));
+	float fOverlap = 0.5f * (fDistance - check_Point->radius - p->radius);
+
+	//Move objects outside collision
+	check_Point->x -= fOverlap * (check_Point->x - p->x) / fDistance;
+	check_Point->y -= fOverlap * (check_Point->y - p->y) / fDistance;
+	p->x += fOverlap * (check_Point->x - p->x) / fDistance;
+	p->y += fOverlap * (check_Point->y - p->y) / fDistance;
+
+	//Invert velocity to simulate elastic collision
+	check_Point->vx = p->vx;
+	check_Point->vx *= -1 * bounce;
+	check_Point->vy = p->vy;
+	check_Point->vy *= -1 * bounce;
+}
 

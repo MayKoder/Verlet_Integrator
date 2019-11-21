@@ -26,7 +26,7 @@ public:
 
 
 	void AddForce(Point* p, vector2 force);
-	//void OnCollision();
+	void OnCollision(Point* p, Point* check_Point);
 	Application* App;
 
 
