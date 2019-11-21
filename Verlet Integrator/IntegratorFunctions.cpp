@@ -56,37 +56,28 @@ void VerletIntegrator::updatePoints()
 		p->x = p->x + (p->vx * p->dt) + (0.5f * 0.f * (p->dt * p->dt));
 		p->y = p->y + (p->vy * p->dt) + (0.5f * gravity * (p->dt * p->dt));
 
-		if (App->verlet->bigPlanetEnabled == true || App->verlet->smallPlanetEnabled == true)
-		{
-			p->x = App->gravitationalField->smallPlanetObject->position.x;
-			p->y = App->gravitationalField->smallPlanetObject->position.y;
-		}
-
 
 		//BOTTOM LIMIT
-		if (App->verlet->bigPlanetEnabled == false || App->verlet->smallPlanetEnabled == false)
+		if (p->y > (float)floor_Limit_Y)
 		{
-			if (p->y > (float)floor_Limit_Y)
-			{
-				p->y = (float)floor_Limit_Y;
-				p->vy *= -1.f * bounce;
-			}
-			else if (p->y <= (float)p->radius)
-			{
-				p->y = (float)p->radius;
-				p->vy *= -1 * bounce;
-			}
+			p->y = (float)floor_Limit_Y;
+			p->vy *= -1.f * bounce;
+		}
+		else if (p->y <= (float)p->radius)
+		{
+			p->y = (float)p->radius;
+			p->vy *= -1 * bounce;
+		}
 
-			if (p->x >= (float)floor_Limit_X)
-			{
-				p->x = (float)floor_Limit_X;
-				p->vx *= -1 * bounce;
-			}
-			else if (p->x <= (float)p->radius)
-			{
-				p->x = (float)p->radius;
-				p->vx *= -1 * bounce;
-			}
+		if (p->x >= (float)floor_Limit_X)
+		{
+			p->x = (float)floor_Limit_X;
+			p->vx *= -1 * bounce;
+		}
+		else if (p->x <= (float)p->radius)
+		{
+			p->x = (float)p->radius;
+			p->vx *= -1 * bounce;
 		}
 
 		//Collision detection between particles (not lines)
