@@ -47,12 +47,16 @@ update_status ModuleUI::Update()
 		{
 			if (selectors[i].enabled && CanBeSelected({ App->input->GetMouseX(), App->input->GetMouseY(), 0, 0 }, selectors[i].rect)) 
 			{
-				App->verlet->creation_type = selectors[i].OnClick();
-			}
-			if (CanBeSelected({ App->input->GetMouseX(), App->input->GetMouseY(), 0, 0 }, selectors[i].rect) && i == 3)
-			{
-				App->verlet->ClearWorld();
-				App->verlet->creation_type = ShapeType::CIRCLE;
+				if (i == 3) 
+				{
+					ShapeType selType = App->verlet->creation_type;
+					App->verlet->ClearWorld();
+					App->verlet->creation_type = selType;
+				}
+				else
+				{
+					App->verlet->creation_type = selectors[i].OnClick();
+				}
 			}
 		}
 

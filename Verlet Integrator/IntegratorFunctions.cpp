@@ -9,14 +9,16 @@ VerletIntegrator::VerletIntegrator(Application* app)
 	App = app;
 }
 
+//Point definitin
 void VerletIntegrator::InitPoint(Point* p, vector2 pos)
 {
 	p->x = pos.x;
 	p->y = pos.y;
-	p->old_x = pos.x;
-	p->old_y = pos.y;
+	//p->old_x = pos.x;
+	//p->old_y = pos.y;
 	p->vx =	0.f;
 	p->vy = 0.f;
+	//Hardcode or calculate?
 	p->dt = (1.f/ 60.f);
 
 
@@ -26,20 +28,24 @@ void VerletIntegrator::InitPoint(Point* p, vector2 pos)
 	p->color.r = 255;
 	p->color.a = 80;
 
+	//Rect to allow particle selection
 	p->selector_rect = { (int)pos.x, (int)pos.y, p->radius * 2, p->radius * 2};
 }
 
+//Adds a force to a selected particle via a vector
 void VerletIntegrator::AddForce(Point* p, vector2 force) 
 {
 	p->vx += force.x;
 	p->vy += force.y;
 }
 
+//Updates all particles on the world
 void VerletIntegrator::updatePoints()
 {
 
 	p2List_item<Point*>* temp_list_item = world_points.start;
 
+	//Itinerates all particles
 	while (temp_list_item)
 	{
 
@@ -49,7 +55,7 @@ void VerletIntegrator::updatePoints()
 		double incrementX = fabs(p->x);
 		double incrementY = fabs(p->y);
 
-		//Update particle position
+		//Update particle position with 
 		p->x = p->x + (p->vx * p->dt) + (0.5f * 0.f * (p->dt * p->dt));
 		p->y = p->y + (p->vy * p->dt) + (0.5f * gravity * (p->dt * p->dt));
 
