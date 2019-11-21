@@ -52,16 +52,9 @@ void VerletIntegrator::updatePoints()
 
 		Point* p = temp_list_item->data;
 
-		double incrementX = fabs(p->x);
-		double incrementY = fabs(p->y);
-
 		//Update particle position with 
 		p->x = p->x + (p->vx * p->dt) + (0.5f * 0.f * (p->dt * p->dt));
 		p->y = p->y + (p->vy * p->dt) + (0.5f * gravity * (p->dt * p->dt));
-
-		incrementX -= fabs(p->x);
-		incrementY -= fabs(p->y);
-
 
 
 		//BOTTOM LIMIT
@@ -98,24 +91,19 @@ void VerletIntegrator::updatePoints()
 					p->vx *= -1 * bounce;
 					p->vy *= -1 * bounce;
 
-					//Ugly way to do collision correction, needs an update
-					p->x += (float)incrementX;
-					p->y += (float)incrementY;
+					//Ball collision correction
+					float fDistance = sqrtf((check_Point->x - p->x)*(check_Point->x - p->x) + (check_Point->y - p->y)*(check_Point->y - p->y));
+					float fOverlap = 0.5f * (fDistance - check_Point->radius - p->radius);
 
-					//if (p->x > check_Point->x) 
-					//{
-					//	p->x = check_Point->x + check_Point->radius + check_Point->radius;
-					//}
-					//else if (p->x < check_Point->x)
-					//{
-					//	p->x = check_Point->x - check_Point->radius - check_Point->radius;
-					//}
+					//Move objects outside collision
+					check_Point->x -= fOverlap * (check_Point->x - p->x) / fDistance;
+					check_Point->y -= fOverlap * (check_Point->y - p->y) / fDistance;
+					p->x += fOverlap * (check_Point->x - p->x) / fDistance;
+					p->y += fOverlap * (check_Point->y - p->y) / fDistance;
 
-
-
+					//Invert velocity to simulate elastic collision
 					check_Point->vx = p->vx;
 					check_Point->vx *= -1 * bounce;
-
 					check_Point->vy = p->vy;
 					check_Point->vy *= -1 * bounce;
 				}

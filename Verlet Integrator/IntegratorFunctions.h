@@ -43,7 +43,7 @@ public:
 	float bounce = 0.9f;
 	//float gravity = 9.81f;
 	float gravity = 500.f;
-	float friction = 50.f;
+	float friction = 40.f;
 
 	int floor_Limit_Y = SCREEN_HEIGHT - 10;
 	int floor_Limit_X = SCREEN_WIDTH-10;
