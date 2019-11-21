@@ -26,7 +26,7 @@ bool GravitationalField::Init()
 
 	//SMALL PLANET SETTING VARS
 	smallPlanetObject->mass = 10.f;
-	smallPlanetObject->position = { (SCREEN_WIDTH * 0.5) + 200, (SCREEN_HEIGHT * 0.5) - 50 };
+	smallPlanetObject->position = { (SCREEN_WIDTH * 0.5) + 100, (SCREEN_HEIGHT * 0.5) - 50 };
 	smallPlanetObject->speed = { 0.f, 0.f };
 
 	return true;
@@ -85,6 +85,8 @@ void GravitationalField::DrawSmallPlanet(PlanetObject* Moon)
 vector2 GravitationalField::Move(Planet* Earth, PlanetObject* Moon)
 {
 	//Calculing Fg
+	//Fg = (-G * M * m)/(r * r)
+
 	r.x = Moon->position.x - Earth->position.x;
 	LOG("R.X: %f", r.x);
 	r.y = Moon->position.y - Earth->position.y;
@@ -103,25 +105,6 @@ vector2 GravitationalField::Move(Planet* Earth, PlanetObject* Moon)
 
 	// -------------------------------
 
-	//	1/4 orbit
-
-	/*if (Moon->position.x <= SCREEN_WIDTH * 0.5)
-	{
-		Fg = Fg * (-1);
-		speed1.x = speed1.x * (-1);
-		speed1.y = speed1.y * (-1);
-		speed2.x = speed2.x * (-1);
-		speed2.y = speed2.y * (-1);
-		acc1.x = acc1.x * (-1);
-		acc1.y = acc1.y * (-1);
-		acc2.x = acc2.x * (-1);
-		acc2.y = acc2.y * (-1);
-		//Moon->position.x = SCREEN_WIDTH * 0.5;
-		return Moon->position;
-	}*/
-
-	// -------------------------------
-
 	//Little planet touches Big Planet Surface
 	insideAtm.x = Earth->position.x + Earth->mass + Moon->mass;
 	insideAtm.y = Earth->position.y + Earth->mass + Moon->mass;
@@ -129,7 +112,7 @@ vector2 GravitationalField::Move(Planet* Earth, PlanetObject* Moon)
 	moduleAtm = SDL_sqrt((insideAtm.x * insideAtm.x) + (insideAtm.y * insideAtm.y));
 
 	//if little planet is at the right of the big planet surface
-	if (Moon->position.x < insideAtm.x && leftSide == false)
+	/*if (Moon->position.x < insideAtm.x && leftSide == false)
 	{
 		if (leftSide == false)
 		{
@@ -155,7 +138,7 @@ vector2 GravitationalField::Move(Planet* Earth, PlanetObject* Moon)
 			acc1 = { 0, 0 };
 			acc2 = { 0, 0 };
 		}
-	}
+	}*/
 
 	// -------------------------------
 
@@ -200,7 +183,6 @@ vector2 GravitationalField::Move(Planet* Earth, PlanetObject* Moon)
 
 	if (Moon->position.x <= SCREEN_WIDTH * 0.5 && changeSign == false)
 	{
-		LOG("PositionX: %f, PositionY: %f, Speed2.x: %f, Speed2.y: %f, R.X: %f, R.Y: %f", Moon->position.x, Moon->position.y, speed2.x, speed2.y, r.x, r.y);
 		speed1.x = speed1.x * (-1);
 		speed1.y = speed1.y * (-1);
 		acc1.x = acc1.x * (-1);
@@ -214,8 +196,6 @@ vector2 GravitationalField::Move(Planet* Earth, PlanetObject* Moon)
 
 	if (Moon->position.y >= SCREEN_HEIGHT * 0.5 && changeSign == false)
 	{
-		LOG("PositionX: %f, PositionY: %f, Speed2.x: %f, Speed2.y: %f, R.X: %f, R.Y: %f", Moon->position.x, Moon->position.y, speed2.x, speed2.y, r.x, r.y);
-
 		speed1.x = speed1.x * (-1);
 		speed1.y = speed1.y * (-1);
 		acc1.x = acc1.x * (-1);
