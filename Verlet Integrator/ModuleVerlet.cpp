@@ -44,6 +44,8 @@ update_status ModuleVerlet::Update()
 
 	if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN) 
 	{
+		bigPlanetEnabled = false;
+		smallPlanetEnabled = false;
 
 		if(App->debug->debugPointNumber == -1)
 			App->debug->debugPointNumber = 0;
@@ -64,17 +66,6 @@ update_status ModuleVerlet::Update()
 		}
 
 	}
-
-	if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
-	{
-		bigPlanetEnabled = true;
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
-	{
-		smallPlanetEnabled = true;
-	}
-
 
 	if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN) 
 	{
@@ -137,7 +128,15 @@ update_status ModuleVerlet::Update()
 		tmp->Draw();
 	}
 
-	
+	if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
+	{
+		bigPlanetEnabled = true;
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
+	{
+		smallPlanetEnabled = true;
+	}
 
 	return UPDATE_CONTINUE;
 }

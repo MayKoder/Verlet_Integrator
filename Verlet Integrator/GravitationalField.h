@@ -6,6 +6,7 @@
 #include "p2List.h"
 #include "IntegratorFunctions.h"
 #include "Shape.h"
+#include "p2List.h"
 
 
 //calcula nueva po cogiendo actual sumando la velocidad por delta t (increment pos hacia ...)
@@ -58,6 +59,7 @@ public:
 
 	void DrawBigPlanet(Planet* Earth);
 	void DrawSmallPlanet(PlanetObject* Moon);
+	void DrawOrbit(PlanetObject* Moon);
 	vector2 Move(Planet* Earth, PlanetObject* Moon);
 
 public:
@@ -81,6 +83,8 @@ public:
 	vector2 origin = { SCREEN_HEIGHT * 0.5, SCREEN_WIDTH * 0.5 };
 
 	vector2 speedTest = { 0.01f, 0.f };
+
+	p2List<vector2*>*	orbitalPoints;
 
 };
 

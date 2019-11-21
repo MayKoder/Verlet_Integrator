@@ -1,5 +1,6 @@
 #include "IntegratorFunctions.h"
-#include"ModuleVerlet.h"
+#include "ModuleVerlet.h"
+#include "GravitationalField.h"
 
 VerletIntegrator::VerletIntegrator()
 {}
@@ -42,8 +43,6 @@ void VerletIntegrator::updatePoints()
 
 	while (temp_list_item)
 	{
-
-
 		Point* p = temp_list_item->data;
 
 		double incrementX = fabs(p->x);
@@ -53,33 +52,43 @@ void VerletIntegrator::updatePoints()
 		p->x = p->x + (p->vx * p->dt) + (0.5f * 0.f * (p->dt * p->dt));
 		p->y = p->y + (p->vy * p->dt) + (0.5f * gravity * (p->dt * p->dt));
 
+		if (App->verlet->bigPlanetEnabled == true || App->verlet->bigPlanetEnabled == true)
+		{
+			p->x = App->gravitationalField->smallPlanetObject->position.x;
+			p->y = App->gravitationalField->smallPlanetObject->position.y;
+		}
+
 		incrementX -= fabs(p->x);
 		incrementY -= fabs(p->y);
 
 
 
 		//BOTTOM LIMIT
-		if (p->y > (float)floor_Limit_Y)
+		if ((App->verlet->bigPlanetEnabled == false || App->verlet->bigPlanetEnabled == false))
 		{
-			p->y = (float)floor_Limit_Y;
-			p->vy *= -1.f * bounce;
-		}
-		else if (p->y <= (float)p->radius)
-		{
-			p->y = (float)p->radius;
-			p->vy *= -1 * bounce;
-		}
+			if (p->y > (float)floor_Limit_Y)
+			{
+				p->y = (float)floor_Limit_Y;
+				p->vy *= -1.f * bounce;
+			}
+			else if (p->y <= (float)p->radius)
+			{
+				p->y = (float)p->radius;
+				p->vy *= -1 * bounce;
+			}
 
-		if (p->x >= (float)floor_Limit_X)
-		{
-			p->x = (float)floor_Limit_X;
-			p->vx *= -1 * bounce;
+			if (p->x >= (float)floor_Limit_X)
+			{
+				p->x = (float)floor_Limit_X;
+				p->vx *= -1 * bounce;
+			}
+			else if (p->x <= (float)p->radius)
+			{
+				p->x = (float)p->radius;
+				p->vx *= -1 * bounce;
+			}
 		}
-		else if (p->x <= (float)p->radius)
-		{
-			p->x = (float)p->radius;
-			p->vx *= -1 * bounce;
-		}
+		
 
 		//Collision detection between particles (not lines)
 		for (unsigned int j = 0; j < world_points.count(); j++)
