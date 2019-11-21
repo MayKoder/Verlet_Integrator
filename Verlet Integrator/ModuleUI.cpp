@@ -22,7 +22,7 @@ bool ModuleUI::Init()
 	SetButton(&menu_button, { SCREEN_WIDTH - 40, 20, 20, 20 }, true, ShapeType::NO_SHAPE, {0, 0, 0, 0}, {255, 255, 255, 255});
 	SetButton(&selection_screen, { SCREEN_WIDTH - 200, 0, 200, SCREEN_HEIGHT }, false, ShapeType::NO_SHAPE, {0, 0, 200, 540}, { 0, 255, 255, 100 });
 	SetButton(&selectors[0], { SCREEN_WIDTH - 167, 20, 140, 140 }, false, ShapeType::CIRCLE, {200, 0, 140, 140}, {0, 0, 255, 100});
-	SetButton(&selectors[1], { SCREEN_WIDTH - 167, 175, 140, 140 }, false, ShapeType::LINE, {200, 140, 140, 140}, { 0, 0, 255, 100 });
+	SetButton(&selectors[1], { SCREEN_WIDTH - 167, 175, 140, 140 }, false, ShapeType::PLANET, {200, 140, 140, 140}, { 0, 0, 255, 100 });
 	SetButton(&selectors[2], { SCREEN_WIDTH - 167, 330, 140, 140 }, false, ShapeType::BOX, {200, 280, 140, 140}, { 0, 0, 255, 100 });
 	SetButton(&selectors[3], { SCREEN_WIDTH - 167, SCREEN_HEIGHT - 56, 140, 40 }, false, ShapeType::NO_SHAPE, {200, 280+140, 140, 40}, { 0, 0, 255, 100 });
 
@@ -32,7 +32,7 @@ bool ModuleUI::Init()
 update_status ModuleUI::Update()
 {
 
-	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN) 
+	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP) 
 	{
 		if (CanBeSelected({ App->input->GetMouseX(), App->input->GetMouseY(), 0, 0 }, menu_button.rect)
 			|| (menu_button.enabled == false && !CanBeSelected({ App->input->GetMouseX(), App->input->GetMouseY(), 0, 0 }, selection_screen.rect)))
@@ -45,23 +45,25 @@ update_status ModuleUI::Update()
 
 		for (int i = 0; i < 4; i++)
 		{
-			if (selectors[i].enabled && CanBeSelected({ App->input->GetMouseX(), App->input->GetMouseY(), 0, 0 }, selectors[i].rect)) 
+			if(selectors[i].enabled)
 			{
-				if (i == 3) 
+				if (CanBeSelected({ App->input->GetMouseX(), App->input->GetMouseY(), 0, 0 }, selectors[i].rect))
 				{
-					ShapeType selType = App->verlet->creation_type;
-					App->verlet->ClearWorld();
-					App->verlet->creation_type = selType;
-				}
-				else
-				{
-					App->verlet->creation_type = selectors[i].OnClick();
+					if (i == 3)
+					{
+						ShapeType selType = App->verlet->creation_type;
+						App->verlet->ClearWorld();
+						App->verlet->creation_type = selType;
+					}
+					else
+					{
+						App->verlet->creation_type = selectors[i].OnClick();
+					}
 				}
 			}
 		}
 
 	}
-
 
 	for (unsigned int i = 0; i < ui_elements.count(); i++)
 	{
@@ -77,6 +79,13 @@ update_status ModuleUI::Update()
 			}
 		}
 			/*App->renderer->DrawQuad(ui_elements[i]->rect, ui_elements[i]->color.r, ui_elements[i]->color.g, ui_elements[i]->color.b, ui_elements[i]->color.a);*/
+	}
+	for (int i = 0; i < 4; i++)
+	{
+		if (selectors[i].enabled && App->verlet->creation_type == selectors[i].type)
+		{
+			App->renderer->DrawQuad(selectors[i].rect, 0, 0, 0, 80);
+		}
 	}
 
 	return update_status::UPDATE_CONTINUE;

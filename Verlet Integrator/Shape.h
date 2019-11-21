@@ -6,6 +6,8 @@
 #include"SDL/include/SDL.h"
 #include"Application.h"
 
+#define PI 3.14159265359f
+
 class Application;
 //Struct point declaration
 struct Point 
@@ -28,7 +30,7 @@ struct Point
 //Shape types
 enum ShapeType
 {
-	NO_SHAPE, LINE, CIRCLE, BOX
+	NO_SHAPE, LINE, CIRCLE, BOX, PLANET
 };
 
 

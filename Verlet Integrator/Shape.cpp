@@ -13,60 +13,12 @@ Circle::Circle(Point* s_point, VerletIntegrator* s_integrator, Application* app)
 void Line::UpdateShape() 
 {
 
-	Point* leftPoint;
-	Point* rightPoint;
+	float angle = atan2(vertexB->y - vertexA->y, vertexB->x - vertexA->x);
+	float distanceH = sqrt(pow(vertexB->x - vertexA->x, 2) + pow(vertexB->y - vertexA->y, 2) * 1.0f);
 
-	if (vertexA->old_x > vertexB->old_x) 
-	{
-		rightPoint = vertexA;
-		leftPoint = vertexB;
-	}
-	else
-	{
-		rightPoint = vertexB;
-		leftPoint = vertexA;
-	}
 
-	int newOffsetX = (int)(rightPoint->old_x - leftPoint->old_x);
-	int newOffsetY = (int)(rightPoint->old_y - leftPoint->old_y);
-
-	if (offsetX != newOffsetX)
-	{
-		if (newOffsetX > offsetX) 
-		{
-			//La linia es mes llarga
-			int correction = newOffsetX - offsetX;
-
-			//Fer dominant el vertex amb la velocitat mes gran
-			if (leftPoint->vx < 0) 
-			{
-				rightPoint->old_x -= correction / 2;
-				rightPoint->x -= correction / 2;
-			}
-			else
-			{
-				leftPoint->old_x += correction / 2;
-				leftPoint->x += correction / 2;
-			}
-		}
-		else
-		{
-			//La linia es mes llarga
-			int correction = newOffsetX - offsetX;
-
-			//Fer dominant el vertex amb la velocitat mes gran
-			if (leftPoint->vx > 0)
-			{
-				rightPoint->old_x -= correction / 2;
-				rightPoint->x -= correction / 2;
-			}
-			else
-			{
-				leftPoint->old_x += correction / 2;
-				leftPoint->x += correction / 2;
-			}
-		}
-	}
+	LOG("Angle %f", angle * 180 / PI);
+	LOG("Distance %f", distanceH);
 
 }
 void Line::Draw() 

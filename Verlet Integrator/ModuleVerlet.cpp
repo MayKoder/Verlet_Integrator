@@ -49,6 +49,10 @@ update_status ModuleVerlet::Update()
 		case NO_SHAPE:
 
 			break;
+		case PLANET:
+			bigPlanetEnabled = true;
+			smallPlanetEnabled = true;
+			break;
 		case LINE:
 			//integrator->InitPoint(world_points.add(new Point())->data, { (float)App->input->GetMouseX(), (float)App->input->GetMouseY() });
 			break;
@@ -64,16 +68,6 @@ update_status ModuleVerlet::Update()
 			break;
 		}
 
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
-	{
-		bigPlanetEnabled = true;
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
-	{
-		smallPlanetEnabled = true;
 	}
 
 
