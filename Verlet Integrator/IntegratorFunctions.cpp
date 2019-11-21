@@ -19,12 +19,11 @@ void VerletIntegrator::InitPoint(Point* p, vector2 pos)
 	p->vy = 0.f;
 	p->dt = (1.f/ 60.f);
 
+
 	//p->color.r = (Uint8)rand() % 255;
 	//p->color.g = (Uint8)rand() % 255;
 	//p->color.b = (Uint8)rand() % 255;
-	p->color.r = (Uint8)rand() % 255;
-	p->color.g = (Uint8)rand() % 255;
-	p->color.b = (Uint8)rand() % 255;
+	p->color.r = 255;
 	p->color.a = 80;
 
 	p->selector_rect = { (int)pos.x, (int)pos.y, p->radius * 2, p->radius * 2};
@@ -38,41 +37,6 @@ void VerletIntegrator::AddForce(Point* p, vector2 force)
 
 void VerletIntegrator::updatePoints(Point* p)
 {
-
-	//p->vx = (p->x - p->old_x) /** friction*/;
-	//p->vy = (p->y - p->old_y) /** friction*/;
-
-	//p->old_x = p->x;
-	//p->old_y = p->y;
-	//p->x += p->vx;
-	//p->y += p->vy;
-	//p->y += gravity;
-	//LOG("POINT X: %.2f, POINT Y: %.2f", p->x, p->y);
-
-	////RIGHT LIMIT
-	//if (p->x > floor_Limit_X) //SHOULD BE CHANGED, INCLUDING SDL AND SO SCREEN WIDTH INSTEAD OF 200
-	//{
-	//	p->x = (float)floor_Limit_X;
-	//	p->old_x = p->x + p->vx * bounce; //p.old_y should remain the same	
-	//}
-	////LEFT LIMIT
-	//else if (p->x < 0 + p->radius)
-	//{
-	//	p->x = 0 + (float)p->radius;
-	//	p->old_x = p->x + p->vx * bounce;
-	//}
-	////TOP LIMIT
-	//if (p->y > floor_Limit_Y) //SHOULD BE CHANGED, INCLUDING SDL AND SO SCREEN HEIGHT INSTEAD OF 200
-	//{
-	//	p->y = (float)floor_Limit_Y;
-	//	p->old_y = p->y + p->vy * bounce; //p.old_x should remain the same	
-	//}
-	////BOTTOM LIMIT
-	//else if (p->y < 0 + p->radius)
-	//{
-	//	p->y = 0 + (float)p->radius;
-	//	p->old_y = p->y + p->vy * bounce;
-	//}
 
 	double incrementX = fabs(p->x);
 	double incrementY = fabs(p->y);
@@ -123,6 +87,16 @@ void VerletIntegrator::updatePoints(Point* p)
 				//Ugly way to do collision correction, needs an update
 				p->x += incrementX;
 				p->y += incrementY;
+
+				//if (p->x > check_Point->x) 
+				//{
+				//	p->x = check_Point->x + check_Point->radius + check_Point->radius;
+				//}
+				//else if (p->x < check_Point->x)
+				//{
+				//	p->x = check_Point->x - check_Point->radius - check_Point->radius;
+				//}
+
 
 
 				check_Point->vx = p->vx;

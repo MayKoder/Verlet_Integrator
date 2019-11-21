@@ -44,7 +44,8 @@ update_status ModuleVerlet::Update()
 	if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN) 
 	{
 
-		
+		if(App->debug->debugPointNumber == -1)
+			App->debug->debugPointNumber = 0;
 
 		switch (creation_type)
 		{
@@ -126,7 +127,8 @@ update_status ModuleVerlet::Update()
 		App->renderer->DrawCircle((int)tmp_point->x, (int)tmp_point->y, tmp_point->radius, 255, 255, 255, 255);
 		tmp_point->selector_rect.x = (int)tmp_point->x - tmp_point->selector_rect.w / 2;
 		tmp_point->selector_rect.y = (int)tmp_point->y - tmp_point->selector_rect.h / 2;
-		App->renderer->DrawQuad({ (int)tmp_point->selector_rect.x, (int)tmp_point->selector_rect.y, 20, 20}, (int)tmp_point->color.r, (int)tmp_point->color.g, (int)tmp_point->color.b, (int)tmp_point->color.a);
+		if(tmp_point == world_points[App->debug->debugPointNumber])
+			App->renderer->DrawQuad({ (int)tmp_point->selector_rect.x, (int)tmp_point->selector_rect.y, 20, 20}, (int)tmp_point->color.r, (int)tmp_point->color.g, (int)tmp_point->color.b, (int)tmp_point->color.a);
 	}
 	for (unsigned int i = 0; i < shapes.count(); i++)
 	{
