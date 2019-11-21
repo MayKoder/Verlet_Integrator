@@ -116,6 +116,14 @@ void VerletIntegrator::updatePoints()
 		}
 		p->vy = p->vy + (gravity * p->dt);
 
+		if (App->verlet->bigPlanetEnabled == true || App->verlet->smallPlanetEnabled == true)
+		{
+			p->vx = App->gravitationalField->speed2.x;
+			p->vy = App->gravitationalField->speed2.y;
+		}
+
+
+
 		//LOG("%f, %f", incrementX, incrementY);
 
 
