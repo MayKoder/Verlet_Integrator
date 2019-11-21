@@ -51,7 +51,7 @@ update_status ModuleVerlet::Update()
 			break;
 		case PLANET:
 			bigPlanetEnabled = true;
-			//smallPlanetEnabled = true;
+			smallPlanetEnabled = true;
 			break;
 		case LINE:
 			//integrator->InitPoint(world_points.add(new Point())->data, { (float)App->input->GetMouseX(), (float)App->input->GetMouseY() });
@@ -60,8 +60,6 @@ update_status ModuleVerlet::Update()
 			integrator->shapes.add(new Circle(new Point(), integrator, App));
 			if (App->debug->debugPointNumber == -1)
 				App->debug->debugPointNumber = 0;
-			if (bigPlanetEnabled == true)
-				smallPlanetEnabled = true;
 			break;
 		case BOX:
 			integrator->shapes.add(new Box(integrator, App));
