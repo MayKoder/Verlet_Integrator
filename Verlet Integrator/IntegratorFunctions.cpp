@@ -20,7 +20,8 @@ void VerletIntegrator::InitPoint(Point* p, vector2 pos)
 	p->vy = 0.f;
 	//Hardcode or calculate?
 	p->dt = (1.f/ 60.f);
-
+	p->acc_x = 0.f;
+	p->acc_y = -gravity;
 
 	//p->color.r = (Uint8)rand() % 255;
 	//p->color.g = (Uint8)rand() % 255;
@@ -107,11 +108,11 @@ void VerletIntegrator::updatePoints()
 		}
 		p->vy = p->vy + (gravity * p->dt);
 
-		if (App->verlet->bigPlanetEnabled == true || App->verlet->smallPlanetEnabled == true)
-		{
-			p->vx = App->gravitationalField->speed2.x;
-			p->vy = App->gravitationalField->speed2.y;
-		}
+		//if (App->verlet->bigPlanetEnabled == true || App->verlet->smallPlanetEnabled == true)
+		//{
+		//	p->vx = App->gravitationalField->speed2.x;
+		//	p->vy = App->gravitationalField->speed2.y;
+		//}
 
 
 

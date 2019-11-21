@@ -173,6 +173,8 @@ void ModuleVerlet::ClearWorld()
 	}
 	integrator->shapes.clear();
 	App->debug->debugPointNumber = -1;
+	smallPlanetEnabled = false;
+	bigPlanetEnabled = false;
 }
 
 Point* ModuleVerlet::MouseHoverSelection() 

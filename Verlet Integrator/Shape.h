@@ -16,6 +16,8 @@ struct Point
 	float y;
 	float old_x;
 	float old_y;
+	float acc_x;
+	float acc_y;
 	float vx;
 	float vy;
 	int radius = 10;
@@ -80,7 +82,7 @@ public:
 		Point* leftPoint;
 		Point* rightPoint;
 
-		if (vertexA->old_x > vertexB->old_x)
+		if (vertexA->x > vertexB->x)
 		{
 			rightPoint = vertexA;
 			leftPoint = vertexB;
@@ -91,10 +93,10 @@ public:
 			leftPoint = vertexA;
 		}
 
-		offsetX = (int)(rightPoint->old_x - leftPoint->old_x);
-		offsetY = (int)(rightPoint->old_y - leftPoint->old_y);
+		offsetX = (int)(rightPoint->x - leftPoint->x);
+		offsetY = (int)(rightPoint->y - leftPoint->y);
 
-		lenght = sqrt(pow(offsetX, 2) +
+		lenght = sqrtf(pow(offsetX, 2) +
 			pow(offsetY, 2) * 1.0f);
 
 
@@ -112,7 +114,7 @@ public:
 
 	int offsetX, offsetY;
 
-	double lenght;
+	float lenght;
 
 };
 
@@ -151,7 +153,7 @@ public:
 
 	//Point
 	Point* box_points[4];
-	Line* lines[5];
+	Line* lines[6];
 	float long_line_length = 50.f;
 	float short_line_length = 50.f;
 

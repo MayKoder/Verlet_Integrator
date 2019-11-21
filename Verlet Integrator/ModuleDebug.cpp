@@ -66,7 +66,7 @@ update_status ModuleDebug::Update()
 	{
 		p2SString* pos = new p2SString("Position(%.2f,%.2f)", App->verlet->integrator->world_points[debugPointNumber]->x, App->verlet->integrator->world_points[debugPointNumber]->y);
 		p2SString* vel = new p2SString("Velocity(%.2f,%.2f)", App->verlet->integrator->world_points[debugPointNumber]->vx, App->verlet->integrator->world_points[debugPointNumber]->vy);
-		p2SString* accel = new p2SString("Acceleration(%.2f,%.2f)", 6.1f, 0.4f);
+		p2SString* accel = new p2SString("Acceleration(%.2f,%.2f)", App->verlet->integrator->world_points[debugPointNumber]->acc_x, App->verlet->integrator->world_points[debugPointNumber]->acc_y);
 
 		App->fonts->BlitText(App->renderer->camera.x + 20, App->renderer->camera.y + 10, 1, pos->GetString());
 		App->fonts->BlitText(App->renderer->camera.x + 20, App->renderer->camera.y + 60, 1, vel->GetString());

@@ -12,13 +12,36 @@ Circle::Circle(Point* s_point, VerletIntegrator* s_integrator, Application* app)
 }
 void Line::UpdateShape() 
 {
+	//float angle = atan2(vertexB->y - vertexA->y, vertexB->x - vertexA->x);
+	//float distanceH = lenght;
+
+	//float newX = distanceH * cosf(angle);
+	//float newY = distanceH * sinf(angle);
+
+	//vector2 corA = { vertexB->x - newX , vertexB->y - newY };
+	//vector2 corB = { vertexA->x + newX ,  vertexA->y + newY };
+
+	//vertexA->x = vertexB->x - newX;
+	//vertexA->y = vertexB->y - newY;
+	//vertexB->x = vertexA->x + newX;
+	//vertexB->y = vertexA->y + newY;
+
 
 	float angle = atan2(vertexB->y - vertexA->y, vertexB->x - vertexA->x);
-	float distanceH = sqrt(pow(vertexB->x - vertexA->x, 2) + pow(vertexB->y - vertexA->y, 2) * 1.0f);
+	float distanceH = lenght;
 
+	float newX = distanceH * cosf(angle);
+	float newY = distanceH * sinf(angle);
 
-	LOG("Angle %f", angle * 180 / PI);
-	LOG("Distance %f", distanceH);
+	vector2 midPoint = { (vertexA->x + vertexB->x) / 2, (vertexA->y + vertexB->y) / 2 };
+	vector2 corA = { vertexB->x - newX , vertexB->y - newY };
+	vector2 corB = { vertexA->x + newX ,  vertexA->y + newY };
+	App->renderer->DrawCircle(midPoint.x, midPoint.y, 5, 255, 255, 9, 255);
+
+	vertexA->x = midPoint.x - (newX / 2.f);
+	vertexA->y = midPoint.y - (newY / 2.f);
+	vertexB->x = midPoint.x + (newX / 2.f);
+	vertexB->y = midPoint.y + (newY / 2.f);
 
 }
 void Line::Draw() 
@@ -58,6 +81,7 @@ Box::Box(VerletIntegrator* s_integrator, Application* app)
 	lines[2] = (Line*)integrator->shapes.add(new Line(box_points[0], box_points[3], integrator, App))->data;
 	lines[3] = (Line*)integrator->shapes.add(new Line(box_points[1], box_points[3], integrator, App))->data;
 	lines[4] = (Line*)integrator->shapes.add(new Line(box_points[2], box_points[3], integrator, App))->data;
+	lines[5] = (Line*)integrator->shapes.add(new Line(box_points[1], box_points[2], integrator, App))->data;
 }
 
 void Box::UpdateShape() {}
