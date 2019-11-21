@@ -11,6 +11,7 @@ class VerletIntegrator;
 class Shape;
 enum ShapeType;
 struct Point;
+//Module verlet
 class ModuleVerlet : public Module
 {
 public:
@@ -24,9 +25,6 @@ public:
 	update_status PostUpdate();
 	bool CleanUp();
 
-
-	p2List_Extended<Shape*> shapes;
-	p2List_Extended<Point*> world_points;
 	VerletIntegrator* integrator;
 
 

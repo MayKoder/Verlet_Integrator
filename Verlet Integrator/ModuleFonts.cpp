@@ -92,9 +92,9 @@ void ModuleFonts::BlitText(int x, int y, int font_id, const char* text, int spac
 	rect.w = font->char_w;
 	rect.h = font->char_h;
 
-	for (int i = 0; i < len; ++i)
+	for (uint i = 0; i < len; ++i)
 	{
-		for (int j = 0; j < MAX_FONT_CHARS; j++) {
+		for (uint j = 0; j < MAX_FONT_CHARS; j++) {
 			if (text[i] == font->table[j]) {
 				rect.x = j * font->char_w;
 				rect.y = 0;

@@ -7,13 +7,11 @@ Circle::Circle(Point* s_point, VerletIntegrator* s_integrator, Application* app)
 	integrator = s_integrator;
 	point = s_point;
 
-	App->verlet->world_points.add(point);
+	App->verlet->integrator->world_points.add(point);
 	integrator->InitPoint(point, { (float)App->input->GetMouseX(), (float)App->input->GetMouseY() });
 }
 void Line::UpdateShape() 
 {
-	integrator->updatePoints(vertexA);
-	integrator->updatePoints(vertexB);
 
 	Point* leftPoint;
 	Point* rightPoint;
@@ -78,9 +76,33 @@ void Line::Draw()
 
 void Circle::UpdateShape()
 {
-	integrator->updatePoints(point);
+	//integrator->updatePoints();
 }
 void Circle::Draw() 
 {
 	App->renderer->DrawCircle((int)point->x, (int)point->y, point->radius, 255, 255, 255, 255);
 }
+
+Box::Box(VerletIntegrator* s_integrator, Application* app)
+{
+	App = app;
+	type = BOX;
+	integrator = s_integrator;
+
+	for (int i = 0; i < 4; i++)
+	{
+		box_points[i] = integrator->world_points.add(new Point())->data;
+	}
+
+	vector2 pos = { (float)App->input->GetMouseX(), (float)App->input->GetMouseY() };
+	integrator->InitPoint(box_points[0], pos);
+	integrator->InitPoint(box_points[1], { pos.x + long_line_length, pos.y });
+	integrator->InitPoint(box_points[2], { pos.x, pos.y + short_line_length });
+	integrator->InitPoint(box_points[3], { pos.x + long_line_length, pos.y + short_line_length });
+
+
+	//Lines* lines[5];
+}
+
+void Box::UpdateShape() {}
+void Box::Draw() {}

@@ -7,8 +7,9 @@
 #include"Application.h"
 
 class Application;
-struct Point {
-
+//Struct point declaration
+struct Point 
+{
 	float x;
 	float y;
 	float old_x;
@@ -24,13 +25,14 @@ struct Point {
 	SDL_Rect selector_rect;
 };
 
-
+//Shape types
 enum ShapeType
 {
 	NO_SHAPE, LINE, CIRCLE, BOX
 };
 
 
+//Shape class
 class Shape
 {
 public:
@@ -60,6 +62,7 @@ public:
 };
 
 class VerletIntegrator;
+//Line class
 class Line : public Shape
 {
 public:
@@ -111,6 +114,7 @@ public:
 
 };
 
+//Circle class
 class Circle : public Shape
 {
 public:
@@ -125,6 +129,29 @@ public:
 
 	//Point
 	Point* point;
+
+};
+
+//Box class
+class Point;
+class Line;
+class Box : public Shape
+{
+public:
+
+	Box(VerletIntegrator* s_integrator, Application* app);
+	~Box() {}
+
+	void UpdateShape();
+	void Draw();
+
+public:
+
+	//Point
+	Point* box_points[4];
+	Line* lines[5];
+	float long_line_length = 50.f;
+	float short_line_length = 50.f;
 
 };
 

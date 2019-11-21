@@ -35,9 +35,9 @@ update_status ModuleDebug::Update()
 	//Draw particle debug info
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN)
 	{
-		if (debugPointNumber + 1 >= (int)App->verlet->world_points.count())
+		if (debugPointNumber + 1 >= (int)App->verlet->integrator->world_points.count())
 		{
-			if ((int)App->verlet->world_points.count() == 0)
+			if ((int)App->verlet->integrator->world_points.count() == 0)
 				debugPointNumber = -1;
 			else
 				debugPointNumber = 0;
@@ -51,21 +51,21 @@ update_status ModuleDebug::Update()
 	{
 		if (debugPointNumber - 1 >= 0)
 		{
-			if ((int)App->verlet->world_points.count() == 0)
+			if ((int)App->verlet->integrator->world_points.count() == 0)
 				debugPointNumber = -1;
 			else
 				debugPointNumber--;
 		}
 		else
 		{
-			debugPointNumber = (int)App->verlet->world_points.count() - 1;
+			debugPointNumber = (int)App->verlet->integrator->world_points.count() - 1;
 		}
 	}
 
 	if (debugPointNumber >= 0) 
 	{
-		p2SString* pos = new p2SString("Position(%.2f,%.2f)", App->verlet->world_points[debugPointNumber]->x, App->verlet->world_points[debugPointNumber]->y);
-		p2SString* vel = new p2SString("Velocity(%.2f,%.2f)", App->verlet->world_points[debugPointNumber]->vx, App->verlet->world_points[debugPointNumber]->vy);
+		p2SString* pos = new p2SString("Position(%.2f,%.2f)", App->verlet->integrator->world_points[debugPointNumber]->x, App->verlet->integrator->world_points[debugPointNumber]->y);
+		p2SString* vel = new p2SString("Velocity(%.2f,%.2f)", App->verlet->integrator->world_points[debugPointNumber]->vx, App->verlet->integrator->world_points[debugPointNumber]->vy);
 		p2SString* accel = new p2SString("Acceleration(%.2f,%.2f)", 6.1f, 0.4f);
 
 		App->fonts->BlitText(App->renderer->camera.x + 20, App->renderer->camera.y + 10, 1, pos->GetString());

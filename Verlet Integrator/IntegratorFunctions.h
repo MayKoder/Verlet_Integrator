@@ -2,6 +2,7 @@
 #define _INTEGRATORFUNCTIONS_H_
 
 #include "p2List.h"
+#include"p2List_Extended.h"
 #include"IntegratorFunctions.h"
 #include"Shape.h"
 #include"Application.h"
@@ -9,20 +10,34 @@
 struct Point;
 class Line;
 class Application;
+class Shape;
 class VerletIntegrator 
 {
 public:
 	VerletIntegrator();
 	VerletIntegrator(Application* app);
 
+	//Init a point with default variables
 	void InitPoint(Point* p, vector2 pos);
-	void updatePoints(Point* p);
+
+
+	//Update point position
+	void updatePoints();
+
+
 	void AddForce(Point* p, vector2 force);
 	//void OnCollision();
 	Application* App;
 
 
 public:
+
+	//All shapes in the world
+	p2List_Extended<Shape*> shapes;
+
+	//All points in the world
+	p2List_Extended<Point*> world_points;
+
 
 	//p2List<Point> point;
 	float bounce = 0.9f;
