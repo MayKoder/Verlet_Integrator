@@ -11,6 +11,7 @@ struct UI_Button {
 	SDL_Rect rect;
 	ShapeType type;
 	SDL_Color color;
+	SDL_Rect sptr_rect;
 
 	ShapeType OnClick() 
 	{
@@ -38,7 +39,7 @@ public:
 
 	bool CanBeSelected(const SDL_Rect& rect, const SDL_Rect& r);
 
-	void SetButton(UI_Button* button, SDL_Rect pos_size, bool enabled, ShapeType creation_type, SDL_Color color);
+	void SetButton(UI_Button* button, SDL_Rect pos_size, bool enabled, ShapeType creation_type, SDL_Rect sprt_rect, SDL_Color color);
 
 public:
 
@@ -46,7 +47,8 @@ public:
 	UI_Button selection_screen;
 
 	//Selection buttons
-	UI_Button selectors[3];
+	UI_Button selectors[4];
+	SDL_Texture* sprtsheet;
 
 
 	p2List_Extended<UI_Button*> ui_elements;

@@ -133,7 +133,7 @@ public:
 };
 
 //Box class
-class Point;
+struct Point;
 class Line;
 class Box : public Shape
 {

@@ -101,7 +101,11 @@ Box::Box(VerletIntegrator* s_integrator, Application* app)
 	integrator->InitPoint(box_points[3], { pos.x + long_line_length, pos.y + short_line_length });
 
 
-	//Lines* lines[5];
+	lines[0] = (Line*)integrator->shapes.add(new Line(box_points[0], box_points[1], integrator, App))->data;
+	lines[1] = (Line*)integrator->shapes.add(new Line(box_points[0], box_points[2], integrator, App))->data;
+	lines[2] = (Line*)integrator->shapes.add(new Line(box_points[0], box_points[3], integrator, App))->data;
+	lines[3] = (Line*)integrator->shapes.add(new Line(box_points[1], box_points[3], integrator, App))->data;
+	lines[4] = (Line*)integrator->shapes.add(new Line(box_points[2], box_points[3], integrator, App))->data;
 }
 
 void Box::UpdateShape() {}

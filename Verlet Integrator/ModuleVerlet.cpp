@@ -44,22 +44,23 @@ update_status ModuleVerlet::Update()
 
 	if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN) 
 	{
-
-		if(App->debug->debugPointNumber == -1)
-			App->debug->debugPointNumber = 0;
-
 		switch (creation_type)
 		{
 		case NO_SHAPE:
+
 			break;
 		case LINE:
 			//integrator->InitPoint(world_points.add(new Point())->data, { (float)App->input->GetMouseX(), (float)App->input->GetMouseY() });
 			break;
 		case CIRCLE:
 			integrator->shapes.add(new Circle(new Point(), integrator, App));
+			if (App->debug->debugPointNumber == -1)
+				App->debug->debugPointNumber = 0;
 			break;
 		case BOX:
 			integrator->shapes.add(new Box(integrator, App));
+			if (App->debug->debugPointNumber == -1)
+				App->debug->debugPointNumber = 0;
 			break;
 		}
 
@@ -157,6 +158,15 @@ bool ModuleVerlet::CleanUp()
 {
 	LOG("Destroying Verlet");
 
+	ClearWorld();
+
+	delete integrator;
+
+	return true;
+}
+
+void ModuleVerlet::ClearWorld() 
+{
 	for (int i = 0; i < (int)integrator->world_points.count(); i++)
 	{
 		delete integrator->world_points[i];
@@ -168,10 +178,7 @@ bool ModuleVerlet::CleanUp()
 		delete integrator->shapes[i];
 	}
 	integrator->shapes.clear();
-
-	delete integrator;
-
-	return true;
+	App->debug->debugPointNumber = -1;
 }
 
 Point* ModuleVerlet::MouseHoverSelection() 
