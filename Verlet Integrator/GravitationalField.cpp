@@ -51,7 +51,6 @@ update_status GravitationalField::Update()
 		DrawSmallPlanet(smallPlanetObject);
 		Move(bigPlanet, smallPlanetObject);
 	}
-
 	return UPDATE_CONTINUE;
 }
 
@@ -202,15 +201,26 @@ vector2 GravitationalField::Move(Planet* Earth, PlanetObject* Moon)
 	if (Moon->position.x <= SCREEN_WIDTH * 0.5 && changeSign == false)
 	{
 		LOG("PositionX: %f, PositionY: %f, Speed2.x: %f, Speed2.y: %f, R.X: %f, R.Y: %f", Moon->position.x, Moon->position.y, speed2.x, speed2.y, r.x, r.y);
+		speed1.x = speed1.x * (-1);
+		speed1.y = speed1.y * (-1);
+		acc1.x = acc1.x * (-1);
+		acc1.y = acc1.y * (-1);
+
 		speed2.x = speed2.x * (-1);
 		speed2.y = speed2.y * (-1);
-		acc2.x = acc2.x * (-1);
-		acc2.y = acc2.y * (-1);
+		//acc2.x = acc2.x * (-1);
+		//acc2.y = acc2.y * (-1);
 	}
 
 	if (Moon->position.y >= SCREEN_HEIGHT * 0.5 && changeSign == false)
 	{
 		LOG("PositionX: %f, PositionY: %f, Speed2.x: %f, Speed2.y: %f, R.X: %f, R.Y: %f", Moon->position.x, Moon->position.y, speed2.x, speed2.y, r.x, r.y);
+
+		speed1.x = speed1.x * (-1);
+		speed1.y = speed1.y * (-1);
+		acc1.x = acc1.x * (-1);
+		acc1.y = acc1.y * (-1);
+
 		speed2.x = speed2.x * (-1);
 		speed2.y = speed2.y * (-1);
 		acc2.x = acc2.x * (-1);
@@ -221,6 +231,8 @@ vector2 GravitationalField::Move(Planet* Earth, PlanetObject* Moon)
 	LOG("PositionX: %f", Moon->position.x);
 	Moon->position.y = Moon->position.y + ((speed2.y / r.y) * 100 * TIME) - (0.5 * acc2.y * TIME * TIME);
 	LOG("PositionY: %f", Moon->position.y);
+
+	//orbitalPoints->add(&Moon->position);
 
 	//Earth->position.x = Earth->position.x + ((speed1.x / r.x) * 100000 * TIME) - (0.5 * acc1.x * TIME * TIME);
 	//LOG("PositionX: %f", Earth->position.x);
