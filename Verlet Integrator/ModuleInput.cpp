@@ -84,6 +84,10 @@ update_status ModuleInput::PreUpdate()
 			//LOG("Mouse button %d up", event.button.button-1);
 			break;
 
+		case SDL_QUIT:
+			return UPDATE_STOP;
+			break;
+
 		case SDL_MOUSEMOTION:
 			int scale = SCREEN_SIZE;
 			mouse_motion_x = event.motion.xrel / scale;
