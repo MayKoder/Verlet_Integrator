@@ -8,7 +8,6 @@
 #include "ModuleRender.h"
 #include "ModuleTextures.h"
 #include "ModuleInput.h"
-#include "ModuleAudio.h"
 #include"ModuleVerlet.h"
 #include"ModuleUI.h"
 #include "ModuleFonts.h"
@@ -24,7 +23,6 @@ public:
 	ModuleWindow* window;
 	ModuleTextures* textures;
 	ModuleInput* input;
-	ModuleAudio* audio;
 	ModuleVerlet* verlet;
 	ModuleUI* UI;
 	ModuleFonts* fonts;

@@ -6,7 +6,6 @@ Application::Application()
 	window = new ModuleWindow(this);
 	textures = new ModuleTextures(this);
 	input = new ModuleInput(this);
-	audio = new ModuleAudio(this, true);
 	verlet = new ModuleVerlet(this, true);
 	UI = new ModuleUI(this, true);
 	fonts = new ModuleFonts(this);
@@ -22,7 +21,6 @@ Application::Application()
 	AddModule(renderer);
 	AddModule(textures);
 	AddModule(input);
-	AddModule(audio);
 	AddModule(gravitationalField);
 	AddModule(verlet);
 	AddModule(UI);
