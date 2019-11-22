@@ -32,8 +32,11 @@ update_status ModuleVerlet::PreUpdate()
 		integrator->shapes[i]->UpdateShape();
 	}
 
-	if (selected_point)
+	if (selected_point) 
+	{
+
 		App->renderer->DrawLine(App->input->GetMouseX(), App->input->GetMouseY(), (int)selected_point->x, (int)selected_point->y, 255, 0, 0);
+	}
 
 	return UPDATE_CONTINUE;
 }

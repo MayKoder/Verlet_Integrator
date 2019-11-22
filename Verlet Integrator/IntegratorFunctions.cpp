@@ -53,6 +53,9 @@ void VerletIntegrator::updatePoints()
 
 		Point* p = temp_list_item->data;
 
+		p->old_x = p->x;
+		p->old_y = p->y;
+
 		//Update particle position with 
 		p->x = p->x + (p->vx * p->dt) + (0.5f * 0.f * (p->dt * p->dt));
 		p->y = p->y + (p->vy * p->dt) + (0.5f * gravity * (p->dt * p->dt));
@@ -115,6 +118,8 @@ void VerletIntegrator::updatePoints()
 		//}
 
 
+		App->renderer->DrawLine(p->old_x, p->old_y, p->x, p->y, 0, 0, 255, 255);
+
 
 		//LOG("%f, %f", incrementX, incrementY);
 
@@ -136,9 +141,9 @@ void VerletIntegrator::OnCollision(Point* p, Point* check_Point)
 
 	//Ball collision correction
 	float fDistance = sqrtf((check_Point->x - p->x)*(check_Point->x - p->x) + (check_Point->y - p->y)*(check_Point->y - p->y));
-	float fOverlap = 0.5f * (fDistance - check_Point->radius - p->radius);
+	float fOverlap = 0.5f * (fDistance - check_Point->radius - p->radius) - 1;
 
-	//Move objects outside collision
+	//Move objects outside collision + dt to fix overlap?
 	check_Point->x -= fOverlap * (check_Point->x - p->x) / fDistance;
 	check_Point->y -= fOverlap * (check_Point->y - p->y) / fDistance;
 	p->x += fOverlap * (check_Point->x - p->x) / fDistance;

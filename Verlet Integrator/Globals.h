@@ -1,6 +1,7 @@
 #pragma once
 #include <windows.h>
 #include <stdio.h>
+#include <math.h>
 
 #define LOG(format, ...) log(__FILE__, __LINE__, format, __VA_ARGS__);
 
@@ -29,6 +30,45 @@ struct vector2 {
 		x = y = 0;
 	}
 
+	float operator*(const vector2& b)
+	{
+		return x* b.x + y * b.y;
+	}
+
+	vector2 operator+ (const vector2& b)
+	{
+		return { x + b.x, y + b.y };
+	}
+
+	vector2 operator- (const vector2& b)
+	{
+		return { x - b.x, y - b.y };
+	}
+
+	float Length() const
+	{
+		return sqrtf(x * x + y * y);
+	}
+
+	float LengthSqr() const
+	{
+		return x * x + y * y;
+	}
+
+	void Normalize()
+	{
+		const float Len = Length();
+		x /= Len;
+		y /= Len;
+	}
+
+	vector2 operator*(float b) const
+	{
+		return {
+			x * b,
+			y * b
+		};
+	}
 
 };
 

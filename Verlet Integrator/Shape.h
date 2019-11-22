@@ -54,6 +54,7 @@ public:
 
 	virtual void UpdateShape() = 0;
 	virtual void Draw() = 0;
+	virtual bool IsInsideMapLimits(float x, float y);
 
 	~Shape() {}
 
