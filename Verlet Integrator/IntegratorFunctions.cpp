@@ -12,20 +12,22 @@ VerletIntegrator::VerletIntegrator(Application* app)
 //Point definitin
 void VerletIntegrator::InitPoint(Point* p, vector2 pos)
 {
+	//Position
 	p->x = pos.x;
 	p->y = pos.y;
-	//p->old_x = pos.x;
-	//p->old_y = pos.y;
+	p->old_x = pos.x;
+	p->old_y = pos.y;
+
+	//Velocity
 	p->vx =	0.f;
 	p->vy = 0.f;
+
 	//Hardcode or calculate?
 	p->dt = (1.f/ 60.f);
 	p->acc_x = 0.f;
 	p->acc_y = -gravity;
 
-	//p->color.r = (Uint8)rand() % 255;
-	//p->color.g = (Uint8)rand() % 255;
-	//p->color.b = (Uint8)rand() % 255;
+	//Color
 	p->color.r = 255;
 	p->color.a = 80;
 
@@ -49,8 +51,6 @@ void VerletIntegrator::updatePoints()
 	//Itinerates all particles
 	while (temp_list_item)
 	{
-
-
 		Point* p = temp_list_item->data;
 
 		p->old_x = p->x;
@@ -111,27 +111,11 @@ void VerletIntegrator::updatePoints()
 		}
 		p->vy = p->vy + (gravity * p->dt);
 
-		//if (App->verlet->bigPlanetEnabled == true || App->verlet->smallPlanetEnabled == true)
-		//{
-		//	p->vx = App->gravitationalField->speed2.x;
-		//	p->vy = App->gravitationalField->speed2.y;
-		//}
-
-
 		App->renderer->DrawLine(p->old_x, p->old_y, p->x, p->y, 0, 0, 255, 255);
-
-
-		//LOG("%f, %f", incrementX, incrementY);
-
 
 		temp_list_item = temp_list_item->next;
 
 	}
-
-
-	
-
-
 }
 
 void VerletIntegrator::OnCollision(Point* p, Point* check_Point)

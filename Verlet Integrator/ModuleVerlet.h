@@ -37,6 +37,8 @@ public:
 	bool bigPlanetEnabled = false;
 	bool smallPlanetEnabled = false;
 
+	int selector_type = 0;
+
 };
 
 #endif // __ModuleVerlet_H__

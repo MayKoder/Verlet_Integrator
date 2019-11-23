@@ -34,8 +34,14 @@ update_status ModuleVerlet::PreUpdate()
 
 	if (selected_point) 
 	{
-
-		App->renderer->DrawLine(App->input->GetMouseX(), App->input->GetMouseY(), (int)selected_point->x, (int)selected_point->y, 255, 0, 0);
+		if (selector_type == 1) 
+		{
+			App->renderer->DrawLine(App->input->GetMouseX(), App->input->GetMouseY(), (int)selected_point->x, (int)selected_point->y, 0, 255, 0);
+		}
+		else
+		{
+			App->renderer->DrawLine(App->input->GetMouseX(), App->input->GetMouseY(), (int)selected_point->x, (int)selected_point->y, 255, 255, 0);
+		}
 	}
 
 	return UPDATE_CONTINUE;
@@ -80,6 +86,7 @@ update_status ModuleVerlet::Update()
 		if (sel) 
 		{
 			selected_point = sel;
+			selector_type = 1;
 		}
 	}
 	if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_UP && selected_point)
@@ -99,6 +106,7 @@ update_status ModuleVerlet::Update()
 		if (sel)
 		{
 			selected_point = sel;
+			selector_type = 2;
 		}
 	}
 	else if(App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP && selected_point)
